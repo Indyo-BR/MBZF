@@ -52,15 +52,6 @@ export default function ArtistDetailPage() {
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
 
-        {artist.featured && (
-          <div className="absolute top-4 right-4 flex items-center gap-1 bg-miami-gold text-dark-surface px-3 py-1 rounded-full">
-            <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
-              star
-            </span>
-            <span className="font-bebas text-xs tracking-widest">Featured</span>
-          </div>
-        )}
-
         <div className="absolute bottom-4 left-6 right-6">
           <h1 className="font-bebas text-5xl text-white leading-none">{artist.name}</h1>
           <p className="font-bebas text-miami-gold tracking-widest text-sm mt-1">

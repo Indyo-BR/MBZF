@@ -32,15 +32,10 @@ export default function ArtistsPage() {
             onClick={() => navigate(`/artists/${a.id}`)}
             className="flex flex-col items-center active:scale-95 transition-transform"
           >
-            <div className="relative mb-3">
+            <div className="mb-3">
               <div className="w-32 h-32 rounded-full border-[6px] border-flamingo-pink p-1">
                 <img src={a.photo} alt={a.name} className="w-full h-full object-cover rounded-full" />
               </div>
-              {a.featured && (
-                <div className="absolute bottom-0 right-0 bg-miami-gold text-dark-surface p-2 rounded-full shadow-md">
-                  <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                </div>
-              )}
             </div>
             <h3 className="font-bebas text-xl text-dark-surface leading-none text-center">{a.name}</h3>
             <p className="text-[10px] uppercase font-bold text-outline tracking-wider mt-1">{a.role}</p>

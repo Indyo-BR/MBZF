@@ -12,7 +12,6 @@ export interface Artist {
   whatsapp: string
   /** Instagram handle WITHOUT the @ (e.g. brunogalhardo). */
   instagram: string
-  featured: boolean
 }
 
 const CURIOSITY_PLACEHOLDER =
@@ -30,7 +29,6 @@ export const artists: Artist[] = [
     curiosity: CURIOSITY_PLACEHOLDER,
     whatsapp: '5511999990001',
     instagram: 'brunogalhardo',
-    featured: true,
   },
   {
     id: '2',
@@ -43,7 +41,6 @@ export const artists: Artist[] = [
     curiosity: CURIOSITY_PLACEHOLDER,
     whatsapp: '5511999990002',
     instagram: 'palomaalves',
-    featured: false,
   },
   {
     id: '3',
@@ -56,7 +53,6 @@ export const artists: Artist[] = [
     curiosity: CURIOSITY_PLACEHOLDER,
     whatsapp: '5511999990003',
     instagram: 'kadupires',
-    featured: false,
   },
   {
     id: '4',
@@ -69,7 +65,6 @@ export const artists: Artist[] = [
     curiosity: CURIOSITY_PLACEHOLDER,
     whatsapp: '5511999990004',
     instagram: 'larissa.zouk',
-    featured: false,
   },
   {
     id: '5',
@@ -82,7 +77,6 @@ export const artists: Artist[] = [
     curiosity: CURIOSITY_PLACEHOLDER,
     whatsapp: '5511999990005',
     instagram: 'walter.zouk',
-    featured: true,
   },
   {
     id: '6',
@@ -95,6 +89,5 @@ export const artists: Artist[] = [
     curiosity: CURIOSITY_PLACEHOLDER,
     whatsapp: '5511999990006',
     instagram: 'brenda.zouk',
-    featured: true,
   },
 ]
