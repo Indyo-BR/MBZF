@@ -13,7 +13,7 @@ const themedNights = [
   },
   {
     id: 'carnaval',
-    title: 'Carnaval Gala',
+    title: 'Carnival Gala',
     date: 'Sunday, April 25',
     img: 'https://loremflickr.com/800/400/carnival,brazil,colorful',
   },

@@ -15,7 +15,7 @@ export interface Artist {
 }
 
 const CURIOSITY_PLACEHOLDER =
-  'Curiosidade em breve — este espaço será preenchido com um fato divertido sobre o artista.'
+  'Fun fact coming soon — this space will be filled with an interesting detail about the artist.'
 
 export const artists: Artist[] = [
   {

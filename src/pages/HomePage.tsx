@@ -47,8 +47,8 @@ const googleCalUrl =
   `&details=${encodeURIComponent(CAL_DETAILS)}`
 
 const calendarOptions = [
-  { label: 'Google Calendar', sub: 'Conta Google', icon: 'event', url: googleCalUrl, external: true },
-  { label: 'Calendário do sistema', sub: 'iPhone · Android', icon: 'calendar_today', url: '/event.ics', external: false },
+  { label: 'Google Calendar', sub: 'Google account', icon: 'event', url: googleCalUrl, external: true },
+  { label: 'Apple Calendar', sub: 'iOS', icon: 'calendar_today', url: '/event.ics', external: false },
 ]
 
 export default function HomePage() {

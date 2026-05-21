@@ -26,7 +26,7 @@ export const schedule: ScheduleEvent[] = [
   // Day 4
   { id: 'd4-1', day: 4, time: '10:00', ampm: 'AM', title: 'Advanced Combinations', type: 'workshop', location: 'Studio A', instructor: 'Bruno & Paloma' },
   { id: 'd4-2', day: 4, time: '02:00', ampm: 'PM', title: 'Body Movement Lab', type: 'workshop', location: 'Studio B', instructor: 'Larissa' },
-  { id: 'd4-3', day: 4, time: '10:00', ampm: 'PM', title: 'Carnaval Gala', type: 'performance', location: 'Grand Theater', instructor: 'All Artists' },
+  { id: 'd4-3', day: 4, time: '10:00', ampm: 'PM', title: 'Carnival Gala', type: 'performance', location: 'Grand Theater', instructor: 'All Artists' },
   // Day 5
   { id: 'd5-1', day: 5, time: '11:00', ampm: 'AM', title: 'Farewell Workshop', type: 'workshop', location: 'Main Ballroom', instructor: 'All Instructors' },
   { id: 'd5-2', day: 5, time: '03:00', ampm: 'PM', title: 'Beach Social', type: 'social', location: 'Ocean Drive' },

@@ -32,7 +32,7 @@ export default function ArtistDetailPage() {
   // "Privates" contact link. Currently points to WhatsApp, but can be
   // swapped per artist to any contact channel (email, form, IG, etc.).
   const privatesMessage = encodeURIComponent(
-    `Olá ${artist.name}! Tenho interesse em aulas particulares (Privates) no Miami Beach Zouk Festival.`
+    `Hi ${artist.name}! I'm interested in private lessons (Privates) at the Miami Beach Zouk Festival.`
   )
   const privatesLink = `https://wa.me/${artist.whatsapp}?text=${privatesMessage}`
   const igLink = `https://instagram.com/${artist.instagram}`
@@ -46,7 +46,7 @@ export default function ArtistDetailPage() {
 
         <button
           onClick={() => navigate('/artists')}
-          aria-label="Voltar"
+          aria-label="Back"
           className="absolute top-4 left-4 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white active:scale-90 transition-transform"
         >
           <span className="material-symbols-outlined">arrow_back</span>
@@ -86,7 +86,7 @@ export default function ArtistDetailPage() {
           Privates
         </a>
         <p className="text-center text-[11px] text-outline mt-2 mb-6">
-          Aulas particulares · fale direto com o artista
+          Private lessons · contact the artist directly
         </p>
 
         {/* Instagram — smaller secondary button */}
