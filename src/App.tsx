@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import BottomNav from './components/BottomNav'
 import TicketFab from './components/TicketFab'
+import InstallPrompt from './components/InstallPrompt'
 import HomePage from './pages/HomePage'
 import SchedulePage from './pages/SchedulePage'
 import BallroomsPage from './pages/BallroomsPage'
@@ -25,6 +26,7 @@ export default function App() {
       </main>
       <TicketFab />
       <BottomNav />
+      <InstallPrompt />
     </div>
   )
 }
