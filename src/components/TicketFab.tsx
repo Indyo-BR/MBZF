@@ -1,0 +1,25 @@
+import { useLocation } from 'react-router-dom'
+
+const TICKETS_URL =
+  'https://www.danceplace.com/pt/index/no/16431/Miami+Beach+Zouk+Festival-2027-Miami+Beach_+FL-United+States-Brazilian+Zouk+Dance+event'
+
+export default function TicketFab() {
+  const location = useLocation()
+
+  // Hide on home (per design hierarchy)
+  if (location.pathname === '/') return null
+
+  return (
+    <a
+      href={TICKETS_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Buy Tickets"
+      className="absolute bottom-[calc(6rem+env(safe-area-inset-bottom))] right-5 w-14 h-14 bg-secondary text-white rounded-full flex items-center justify-center shadow-xl active:scale-90 transition-transform z-[55]"
+    >
+      <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
+        confirmation_number
+      </span>
+    </a>
+  )
+}
