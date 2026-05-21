@@ -12,8 +12,8 @@ function getCountdown() {
   return { days, hours, mins }
 }
 
-// Event location used by the maps apps.
-const EVENT_QUERY = encodeURIComponent('Ocean Drive, Miami Beach, FL, United States')
+// Event venue used by the maps apps.
+const EVENT_QUERY = encodeURIComponent('Holiday Inn Miami Beach-Oceanfront, Miami Beach, FL')
 
 const mapsOptions = [
   {
@@ -91,8 +91,8 @@ export default function HomePage() {
               <span className="material-symbols-outlined text-miami-turquoise mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>
                 location_on
               </span>
-              <p className="font-bebas text-dark-surface tracking-wider">Ocean Drive</p>
-              <p className="text-[10px] uppercase font-bold text-outline">Get directions</p>
+              <p className="font-bebas text-dark-surface tracking-wider">Holiday Inn</p>
+              <p className="text-[10px] uppercase font-bold text-outline">Miami Beach Oceanfront</p>
             </button>
           </div>
 
@@ -151,7 +151,7 @@ export default function HomePage() {
           >
             <div className="w-12 h-1.5 bg-outline-variant rounded-full mx-auto mb-4" />
             <h3 className="font-bebas text-2xl text-primary tracking-wide text-center">Get Directions</h3>
-            <p className="text-center text-xs text-outline mb-5">Ocean Drive · Miami Beach, FL</p>
+            <p className="text-center text-xs text-outline mb-5">Holiday Inn Miami Beach-Oceanfront</p>
 
             <div className="space-y-3">
               {mapsOptions.map((m) => (
