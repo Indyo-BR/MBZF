@@ -12,9 +12,31 @@ function getCountdown() {
   return { days, hours, mins }
 }
 
+// Event location used by the maps apps.
+const EVENT_QUERY = encodeURIComponent('Ocean Drive, Miami Beach, FL, United States')
+
+const mapsOptions = [
+  {
+    label: 'Google Maps',
+    icon: 'map',
+    url: `https://www.google.com/maps/search/?api=1&query=${EVENT_QUERY}`,
+  },
+  {
+    label: 'Waze',
+    icon: 'navigation',
+    url: `https://waze.com/ul?q=${EVENT_QUERY}&navigate=yes`,
+  },
+  {
+    label: 'Apple Maps',
+    icon: 'pin_drop',
+    url: `https://maps.apple.com/?q=${EVENT_QUERY}`,
+  },
+]
+
 export default function HomePage() {
   const navigate = useNavigate()
   const [countdown, setCountdown] = useState(getCountdown())
+  const [mapsOpen, setMapsOpen] = useState(false)
 
   useEffect(() => {
     const id = setInterval(() => setCountdown(getCountdown()), 60000)
@@ -49,20 +71,29 @@ export default function HomePage() {
 
           {/* Info cards */}
           <div className="grid grid-cols-2 gap-4 w-full mb-6">
-            <div className="glass-panel p-4 rounded-xl border border-white/40 flex flex-col items-center text-center">
+            {/* Date → add to calendar (.ics) */}
+            <a
+              href="/event.ics"
+              className="glass-panel p-4 rounded-xl border border-white/40 flex flex-col items-center text-center active:scale-95 transition-transform"
+            >
               <span className="material-symbols-outlined text-flamingo-pink mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>
                 calendar_month
               </span>
               <p className="font-bebas text-dark-surface tracking-wider">April 22–26</p>
-              <p className="text-[10px] uppercase font-bold text-outline">Save the date</p>
-            </div>
-            <div className="glass-panel p-4 rounded-xl border border-white/40 flex flex-col items-center text-center">
+              <p className="text-[10px] uppercase font-bold text-outline">Add to calendar</p>
+            </a>
+
+            {/* Location → open maps app picker */}
+            <button
+              onClick={() => setMapsOpen(true)}
+              className="glass-panel p-4 rounded-xl border border-white/40 flex flex-col items-center text-center active:scale-95 transition-transform"
+            >
               <span className="material-symbols-outlined text-miami-turquoise mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>
                 location_on
               </span>
               <p className="font-bebas text-dark-surface tracking-wider">Ocean Drive</p>
-              <p className="text-[10px] uppercase font-bold text-outline">Miami Beach, FL</p>
-            </div>
+              <p className="text-[10px] uppercase font-bold text-outline">Get directions</p>
+            </button>
           </div>
 
           {/* CTA */}
@@ -106,6 +137,48 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Maps app picker — bottom sheet */}
+      {mapsOpen && (
+        <div
+          className="fixed inset-0 z-[80] flex items-end justify-center"
+          onClick={() => setMapsOpen(false)}
+        >
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+          <div
+            className="relative w-full max-w-md bg-surface rounded-t-3xl px-6 pt-5 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] animate-sheet-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-12 h-1.5 bg-outline-variant rounded-full mx-auto mb-4" />
+            <h3 className="font-bebas text-2xl text-primary tracking-wide text-center">Get Directions</h3>
+            <p className="text-center text-xs text-outline mb-5">Ocean Drive · Miami Beach, FL</p>
+
+            <div className="space-y-3">
+              {mapsOptions.map((m) => (
+                <a
+                  key={m.label}
+                  href={m.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMapsOpen(false)}
+                  className="flex items-center gap-3 w-full bg-surface-container border border-outline-variant/60 rounded-2xl px-4 py-3.5 active:scale-95 transition-transform"
+                >
+                  <span className="material-symbols-outlined text-miami-turquoise">{m.icon}</span>
+                  <span className="font-bebas text-lg tracking-wide text-dark-surface">{m.label}</span>
+                  <span className="material-symbols-outlined text-outline ml-auto text-lg">open_in_new</span>
+                </a>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setMapsOpen(false)}
+              className="w-full mt-4 py-3 font-bebas text-lg tracking-widest text-outline"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

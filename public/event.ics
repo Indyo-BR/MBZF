@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Miami Beach Zouk Festival//App//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:mbzf-2027@mbzf.netlify.app
+DTSTAMP:20260521T120000Z
+DTSTART;VALUE=DATE:20270422
+DTEND;VALUE=DATE:20270427
+SUMMARY:Miami Beach Zouk Festival 2027
+DESCRIPTION:Brazilian Zouk dance festival — workshops, parties and shows in Miami Beach. https://mbzf.netlify.app
+LOCATION:Ocean Drive, Miami Beach, FL, United States
+URL:https://mbzf.netlify.app
+END:VEVENT
+END:VCALENDAR
