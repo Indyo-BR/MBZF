@@ -33,10 +33,29 @@ const mapsOptions = [
   },
 ]
 
+// Festival event used by the calendar apps.
+const CAL_TITLE = 'Miami Beach Zouk Festival 2027'
+const CAL_VENUE = 'Holiday Inn Miami Beach-Oceanfront, Miami Beach, FL'
+const CAL_DETAILS =
+  'Brazilian Zouk dance festival — workshops, parties and shows. https://mbzf.netlify.app'
+
+const googleCalUrl =
+  'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+  `&text=${encodeURIComponent(CAL_TITLE)}` +
+  '&dates=20270422/20270427' +
+  `&location=${encodeURIComponent(CAL_VENUE)}` +
+  `&details=${encodeURIComponent(CAL_DETAILS)}`
+
+const calendarOptions = [
+  { label: 'Google Calendar', sub: 'Conta Google', icon: 'event', url: googleCalUrl, external: true },
+  { label: 'Calendário do sistema', sub: 'iPhone · Android', icon: 'calendar_today', url: '/event.ics', external: false },
+]
+
 export default function HomePage() {
   const navigate = useNavigate()
   const [countdown, setCountdown] = useState(getCountdown())
   const [mapsOpen, setMapsOpen] = useState(false)
+  const [calOpen, setCalOpen] = useState(false)
 
   useEffect(() => {
     const id = setInterval(() => setCountdown(getCountdown()), 60000)
@@ -71,9 +90,9 @@ export default function HomePage() {
 
           {/* Info cards */}
           <div className="grid grid-cols-2 gap-4 w-full mb-6">
-            {/* Date → add to calendar (.ics) */}
-            <a
-              href="/event.ics"
+            {/* Date → add-to-calendar picker */}
+            <button
+              onClick={() => setCalOpen(true)}
               className="glass-panel p-4 rounded-xl border border-white/40 flex flex-col items-center text-center active:scale-95 transition-transform"
             >
               <span className="material-symbols-outlined text-flamingo-pink mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>
@@ -81,7 +100,7 @@ export default function HomePage() {
               </span>
               <p className="font-bebas text-dark-surface tracking-wider">April 22–26</p>
               <p className="text-[10px] uppercase font-bold text-outline">Add to calendar</p>
-            </a>
+            </button>
 
             {/* Location → open maps app picker */}
             <button
@@ -172,6 +191,50 @@ export default function HomePage() {
 
             <button
               onClick={() => setMapsOpen(false)}
+              className="w-full mt-4 py-3 font-bebas text-lg tracking-widest text-outline"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Add-to-calendar picker — bottom sheet */}
+      {calOpen && (
+        <div
+          className="fixed inset-0 z-[80] flex items-end justify-center"
+          onClick={() => setCalOpen(false)}
+        >
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+          <div
+            className="relative w-full max-w-md bg-surface rounded-t-3xl px-6 pt-5 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] animate-sheet-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-12 h-1.5 bg-outline-variant rounded-full mx-auto mb-4" />
+            <h3 className="font-bebas text-2xl text-primary tracking-wide text-center">Add to Calendar</h3>
+            <p className="text-center text-xs text-outline mb-5">Miami Beach Zouk Festival · April 22–26</p>
+
+            <div className="space-y-3">
+              {calendarOptions.map((c) => (
+                <a
+                  key={c.label}
+                  href={c.url}
+                  {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  onClick={() => setCalOpen(false)}
+                  className="flex items-center gap-3 w-full bg-surface-container border border-outline-variant/60 rounded-2xl px-4 py-3.5 active:scale-95 transition-transform"
+                >
+                  <span className="material-symbols-outlined text-flamingo-pink">{c.icon}</span>
+                  <span className="flex flex-col text-left">
+                    <span className="font-bebas text-lg tracking-wide text-dark-surface leading-none">{c.label}</span>
+                    <span className="text-[11px] text-outline mt-0.5">{c.sub}</span>
+                  </span>
+                  <span className="material-symbols-outlined text-outline ml-auto text-lg">chevron_right</span>
+                </a>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setCalOpen(false)}
               className="w-full mt-4 py-3 font-bebas text-lg tracking-widest text-outline"
             >
               Cancel
