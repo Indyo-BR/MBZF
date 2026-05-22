@@ -6,7 +6,7 @@ import TicketFab from './components/TicketFab'
 import InstallPrompt from './components/InstallPrompt'
 import HomePage from './pages/HomePage'
 import SchedulePage from './pages/SchedulePage'
-import BallroomsPage from './pages/BallroomsPage'
+import PartiesPage from './pages/PartiesPage'
 import ArtistsPage from './pages/ArtistsPage'
 import ArtistDetailPage from './pages/ArtistDetailPage'
 import VideosPage from './pages/VideosPage'
@@ -23,12 +23,16 @@ function RoutedPages() {
     document.querySelector('.page-scroll')?.scrollTo({ top: 0 })
   }, [location.pathname])
 
+  // Videos needs a fixed-height wrapper for its internal snap scroll;
+  // every other page grows with its content so the bottom padding works.
+  const fullHeight = location.pathname === '/videos'
+
   return (
-    <div key={location.pathname} className="page-fade h-full">
+    <div key={location.pathname} className={`page-fade ${fullHeight ? 'h-full' : 'min-h-full'}`}>
       <Routes location={location}>
         <Route path="/" element={<HomePage />} />
         <Route path="/schedule" element={<SchedulePage />} />
-        <Route path="/ballrooms" element={<BallroomsPage />} />
+        <Route path="/parties" element={<PartiesPage />} />
         <Route path="/artists" element={<ArtistsPage />} />
         <Route path="/artists/:id" element={<ArtistDetailPage />} />
         <Route path="/videos" element={<VideosPage />} />

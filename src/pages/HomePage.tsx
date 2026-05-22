@@ -138,29 +138,37 @@ export default function HomePage() {
 
       {/* Featured artists */}
       <section className="reveal mt-4 px-6 pb-6" style={{ animationDelay: '300ms' }}>
-        <div className="flex justify-between items-end mb-4">
-          <h2 className="font-bebas text-primary text-2xl tracking-wide">FEATURED ARTISTS</h2>
-          <button onClick={() => navigate('/artists')} className="font-bebas text-secondary text-sm tracking-widest underline">
-            VIEW ALL
-          </button>
-        </div>
-        <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-4">
-          {artists.map((a) => (
+        <h2 className="font-bebas text-primary text-2xl tracking-wide mb-4">FEATURED ARTISTS</h2>
+        <div className="grid grid-cols-4 gap-3">
+          {artists.slice(0, 3).map((a) => (
             <button
               key={a.id}
               onClick={() => navigate(`/artists/${a.id}`)}
-              className="flex-shrink-0 w-24 active:scale-95 transition-transform"
+              className="flex flex-col items-center active:scale-95 transition-transform"
             >
-              <div className="skeleton w-24 h-24 rounded-full border-4 border-flamingo-pink p-1">
+              <div className="skeleton w-full aspect-square rounded-full border-4 border-flamingo-pink p-0.5">
                 <FadeInImage
                   src={a.photo}
                   alt={a.name}
                   className="w-full h-full object-cover rounded-full"
                 />
               </div>
-              <p className="text-center font-bold mt-2 text-xs text-dark-surface">{a.name.split(' ')[0]}</p>
+              <p className="w-full text-center font-bold mt-2 text-[11px] text-dark-surface truncate">
+                {a.name.split(' ')[0]}
+              </p>
             </button>
           ))}
+
+          {/* View all */}
+          <button
+            onClick={() => navigate('/artists')}
+            className="flex flex-col items-center active:scale-95 transition-transform"
+          >
+            <div className="w-full aspect-square rounded-full border-4 border-dashed border-flamingo-pink flex items-center justify-center">
+              <span className="material-symbols-outlined text-flamingo-pink text-3xl">arrow_forward</span>
+            </div>
+            <p className="w-full text-center font-bold mt-2 text-[11px] text-secondary">View All</p>
+          </button>
         </div>
       </section>
 
