@@ -17,20 +17,28 @@ export default function BottomNav() {
           to={to}
           end={to === '/'}
           className={({ isActive }) =>
-            `flex flex-col items-center justify-center py-1 px-3 transition-all duration-300 ${
-              isActive
-                ? 'bg-secondary-container text-on-secondary-container rounded-full scale-90'
-                : 'text-on-surface'
+            `relative flex flex-col items-center justify-center py-1 px-3 rounded-full transition-transform duration-150 active:scale-90 ${
+              isActive ? 'bg-secondary-container text-on-secondary-container' : 'text-on-surface'
             }`
           }
         >
           {({ isActive }) => (
             <>
-              <span
-                className="material-symbols-outlined text-xl"
-                style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}
-              >
-                {icon}
+              <span className="relative flex items-center justify-center">
+                {isActive && (
+                  <span
+                    aria-hidden="true"
+                    className="nav-ripple absolute top-1/2 left-1/2 w-8 h-8 rounded-full bg-miami-gold pointer-events-none"
+                  />
+                )}
+                <span
+                  className={`material-symbols-outlined text-xl relative z-10 ${
+                    isActive ? 'nav-icon-pop' : ''
+                  }`}
+                  style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}
+                >
+                  {icon}
+                </span>
               </span>
               <span className="font-bebas text-[10px] tracking-wider">{label}</span>
             </>
