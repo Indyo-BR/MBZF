@@ -1,3 +1,5 @@
+import FadeInImage from '../components/FadeInImage'
+
 const themedNights = [
   {
     id: 'white',
@@ -22,11 +24,19 @@ const themedNights = [
 export default function BallroomsPage() {
   return (
     <div className="px-6 pt-6 pb-6">
-      <h1 className="font-bebas text-5xl text-primary mb-6 leading-none">Themed Nights</h1>
+      <h1 className="reveal font-bebas text-5xl text-primary mb-6 leading-none">Themed Nights</h1>
       <div className="grid grid-cols-1 gap-6">
-        {themedNights.map((n) => (
-          <div key={n.id} className="relative h-48 rounded-2xl overflow-hidden shadow-lg group">
-            <img src={n.img} alt={n.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        {themedNights.map((n, i) => (
+          <div
+            key={n.id}
+            className="reveal skeleton relative h-48 rounded-2xl overflow-hidden shadow-card group"
+            style={{ animationDelay: `${100 + i * 90}ms` }}
+          >
+            <FadeInImage
+              src={n.img}
+              alt={n.title}
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-4 left-4">
               <h2 className="font-bebas text-4xl text-miami-gold leading-none">{n.title}</h2>

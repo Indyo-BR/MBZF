@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import FadeInImage from '../components/FadeInImage'
 
 interface Reel {
   id: string
@@ -48,11 +49,10 @@ function ReelCard({
         />
       ) : (
         <button onClick={onPlay} className="absolute inset-0 w-full h-full text-left">
-          <img
+          <FadeInImage
             src={thumb}
             alt={reel.title}
             className="w-full h-full object-cover"
-            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">

@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { artists } from '../data/artists'
+import FadeInImage from '../components/FadeInImage'
 
 /** Instagram brand glyph. */
 function InstagramIcon({ className = '' }: { className?: string }) {
@@ -40,8 +41,12 @@ export default function ArtistDetailPage() {
   return (
     <div className="pb-10">
       {/* Hero photo */}
-      <div className="relative h-80 w-full overflow-hidden">
-        <img src={artist.photo} alt={artist.name} className="w-full h-full object-cover" />
+      <div className="skeleton relative h-80 w-full overflow-hidden">
+        <FadeInImage
+          src={artist.photo}
+          alt={artist.name}
+          className="w-full h-full object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-black/30" />
 
         <button
@@ -62,39 +67,42 @@ export default function ArtistDetailPage() {
 
       <div className="px-6 pt-6">
         {/* Biography */}
-        <section className="mb-6">
+        <section className="reveal mb-6" style={{ animationDelay: '60ms' }}>
           <h2 className="font-bebas text-2xl text-primary tracking-wide mb-2">Biography</h2>
           <p className="text-sm text-on-surface/80 leading-relaxed">{artist.bio}</p>
         </section>
 
         {/* Curiosity */}
-        <section className="mb-8">
+        <section className="reveal mb-8" style={{ animationDelay: '140ms' }}>
           <h2 className="font-bebas text-2xl text-primary tracking-wide mb-2">Did you know?</h2>
           <p className="text-sm text-on-surface/60 italic leading-relaxed">{artist.curiosity}</p>
         </section>
 
         {/* Privates CTA */}
-        <a
-          href={privatesLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-3 w-full bg-flamingo-pink text-white py-4 rounded-full font-bebas text-2xl tracking-widest shadow-lg active:scale-95 transition-transform"
-        >
-          <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
-            school
-          </span>
-          Privates
-        </a>
-        <p className="text-center text-[11px] text-outline mt-2 mb-6">
-          Private lessons · contact the artist directly
-        </p>
+        <div className="reveal" style={{ animationDelay: '220ms' }}>
+          <a
+            href={privatesLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-3 w-full bg-flamingo-pink text-white py-4 rounded-full font-bebas text-2xl tracking-widest shadow-card active:scale-95 transition-transform"
+          >
+            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
+              school
+            </span>
+            Privates
+          </a>
+          <p className="text-center text-[11px] text-outline mt-2 mb-6">
+            Private lessons · contact the artist directly
+          </p>
+        </div>
 
         {/* Instagram — smaller secondary button */}
         <a
           href={igLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-1/2 mx-auto border-2 border-flamingo-pink text-flamingo-pink py-2.5 rounded-full font-bebas text-base tracking-widest active:scale-95 transition-transform"
+          className="reveal flex items-center justify-center gap-2 w-1/2 mx-auto border-2 border-flamingo-pink text-flamingo-pink py-2.5 rounded-full font-bebas text-base tracking-widest active:scale-95 transition-transform"
+          style={{ animationDelay: '300ms' }}
         >
           <InstagramIcon className="w-4 h-4" />
           Instagram

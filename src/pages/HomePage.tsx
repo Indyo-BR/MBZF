@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { artists } from '../data/artists'
+import FadeInImage from '../components/FadeInImage'
 
 function getCountdown() {
   const target = new Date('2027-04-22T00:00:00').getTime()
@@ -65,8 +66,8 @@ export default function HomePage() {
   return (
     <div>
       {/* HERO */}
-      <section className="relative h-[80vh] min-h-[520px] w-full flex flex-col items-center justify-center overflow-hidden">
-        <img
+      <section className="relative h-[80vh] min-h-[520px] w-full flex flex-col items-center justify-center overflow-hidden bg-wood-brown">
+        <FadeInImage
           alt="Festival Background"
           className="absolute inset-0 w-full h-full object-cover"
           src="https://loremflickr.com/800/1200/miami,beach,pool,palm"
@@ -75,7 +76,7 @@ export default function HomePage() {
 
         <div className="relative z-10 w-full px-6 flex flex-col items-center">
           {/* Countdown */}
-          <div className="flex gap-6 mb-10">
+          <div className="reveal flex gap-6 mb-10">
             {[
               { v: String(countdown.days).padStart(2, '0'), label: 'Days' },
               { v: String(countdown.hours).padStart(2, '0'), label: 'Hours' },
@@ -89,11 +90,11 @@ export default function HomePage() {
           </div>
 
           {/* Info cards */}
-          <div className="grid grid-cols-2 gap-4 w-full mb-6">
+          <div className="reveal grid grid-cols-2 gap-4 w-full mb-6" style={{ animationDelay: '90ms' }}>
             {/* Date → add-to-calendar picker */}
             <button
               onClick={() => setCalOpen(true)}
-              className="glass-panel p-4 rounded-xl border border-white/40 flex flex-col items-center text-center active:scale-95 transition-transform"
+              className="glass-panel p-4 rounded-xl border border-white/40 shadow-card flex flex-col items-center text-center active:scale-95 transition-transform"
             >
               <span className="material-symbols-outlined text-flamingo-pink mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>
                 calendar_month
@@ -105,7 +106,7 @@ export default function HomePage() {
             {/* Location → open maps app picker */}
             <button
               onClick={() => setMapsOpen(true)}
-              className="glass-panel p-4 rounded-xl border border-white/40 flex flex-col items-center text-center active:scale-95 transition-transform"
+              className="glass-panel p-4 rounded-xl border border-white/40 shadow-card flex flex-col items-center text-center active:scale-95 transition-transform"
             >
               <span className="material-symbols-outlined text-miami-turquoise mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>
                 location_on
@@ -118,7 +119,8 @@ export default function HomePage() {
           {/* CTA */}
           <button
             onClick={() => navigate('/schedule')}
-            className="w-full bg-flamingo-pink text-white py-4 rounded-full font-bebas text-2xl tracking-widest shadow-lg active:scale-95 transition-transform"
+            className="reveal w-full bg-flamingo-pink text-white py-4 rounded-full font-bebas text-2xl tracking-widest shadow-card active:scale-95 transition-transform"
+            style={{ animationDelay: '170ms' }}
           >
             SCHEDULE
           </button>
@@ -126,7 +128,8 @@ export default function HomePage() {
             href="https://www.danceplace.com/pt/index/no/16431/Miami+Beach+Zouk+Festival-2027-Miami+Beach_+FL-United+States-Brazilian+Zouk+Dance+event"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full mt-3 block text-center bg-flamingo-pink text-white py-4 rounded-full font-bebas text-2xl tracking-widest shadow-lg active:scale-95 transition-transform"
+            className="reveal w-full mt-3 block text-center bg-flamingo-pink text-white py-4 rounded-full font-bebas text-2xl tracking-widest shadow-card active:scale-95 transition-transform"
+            style={{ animationDelay: '230ms' }}
           >
             Buy Tickets
           </a>
@@ -134,7 +137,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured artists */}
-      <section className="mt-4 px-6 pb-6">
+      <section className="reveal mt-4 px-6 pb-6" style={{ animationDelay: '300ms' }}>
         <div className="flex justify-between items-end mb-4">
           <h2 className="font-bebas text-primary text-2xl tracking-wide">FEATURED ARTISTS</h2>
           <button onClick={() => navigate('/artists')} className="font-bebas text-secondary text-sm tracking-widest underline">
@@ -146,10 +149,14 @@ export default function HomePage() {
             <button
               key={a.id}
               onClick={() => navigate(`/artists/${a.id}`)}
-              className="flex-shrink-0 w-24"
+              className="flex-shrink-0 w-24 active:scale-95 transition-transform"
             >
-              <div className="w-24 h-24 rounded-full border-4 border-flamingo-pink p-1">
-                <img src={a.photo} alt={a.name} className="w-full h-full object-cover rounded-full" />
+              <div className="skeleton w-24 h-24 rounded-full border-4 border-flamingo-pink p-1">
+                <FadeInImage
+                  src={a.photo}
+                  alt={a.name}
+                  className="w-full h-full object-cover rounded-full"
+                />
               </div>
               <p className="text-center font-bold mt-2 text-xs text-dark-surface">{a.name.split(' ')[0]}</p>
             </button>
