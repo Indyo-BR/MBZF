@@ -1,5 +1,5 @@
-const CACHE_NAME = 'miami-zouk-v2';
-const STATIC_ASSETS = ['/', '/index.html', '/manifest.json', '/flamingo.svg', '/favicon.svg'];
+const CACHE_NAME = 'miami-zouk-v3';
+const STATIC_ASSETS = ['/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE_NAME).then((c) => c.addAll(STATIC_ASSETS)));
