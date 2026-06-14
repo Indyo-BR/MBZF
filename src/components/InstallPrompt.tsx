@@ -32,20 +32,18 @@ function Step({ n, icon, text }: { n: number; icon: string; text: string }) {
 }
 
 export default function InstallPrompt() {
+  // Detect the platform once, synchronously, before the first paint.
+  const [platform] = useState<Platform>(detectPlatform)
   const [visible, setVisible] = useState(false)
-  const [platform, setPlatform] = useState<Platform>('other')
 
   useEffect(() => {
     if (isStandalone()) return // already installed — nothing to do
     if (sessionStorage.getItem('mbzf-install-dismissed')) return
-
-    const p = detectPlatform()
-    if (p === 'other') return // desktop — skip the home-screen prompt
-    setPlatform(p)
+    if (platform === 'other') return // desktop — skip the home-screen prompt
 
     const t = setTimeout(() => setVisible(true), 1200)
     return () => clearTimeout(t)
-  }, [])
+  }, [platform])
 
   if (!visible) return null
 
