@@ -1,72 +1,137 @@
 import { useState } from 'react'
-import type { ScheduleEvent } from '../data/schedule'
-import { schedule } from '../data/schedule'
+import type { EventType, ScheduleSlot, SlotEntry } from '../data/schedule'
+import { days, schedule } from '../data/schedule'
 
-const typeColors: Record<ScheduleEvent['type'], string> = {
+const typeColors: Record<EventType, string> = {
   workshop: 'bg-miami-turquoise',
   pool: 'bg-tropical-green',
-  performance: 'bg-flamingo-pink',
+  party: 'bg-flamingo-pink',
   social: 'bg-secondary',
 }
 
-const typeLabels: Record<ScheduleEvent['type'], string> = {
+const typeLabels: Record<EventType, string> = {
   workshop: 'Workshop',
   pool: 'Pool Party',
-  performance: 'Performance',
+  party: 'Party',
   social: 'Social',
 }
 
+/** Secondary line: title when there's an artist, otherwise the note. */
+const secondaryText = (e: SlotEntry) => (e.artist ? e.title : e.note)
+
+/** Renders a couple's name on two lines, breaking after the "&" (e.g. "Deborah &" / "Douglas"). */
+function ArtistName({ name }: { name: string }) {
+  const parts = name.split(' & ')
+  if (parts.length === 2) {
+    return (
+      <>
+        {parts[0]} &<br />
+        {parts[1]}
+      </>
+    )
+  }
+  return <>{name}</>
+}
+
+function TypeBadge({ type }: { type: EventType }) {
+  return (
+    <span
+      className={`inline-block px-3 py-0.5 rounded-full text-white text-[10px] font-bold uppercase ${typeColors[type]}`}
+    >
+      {typeLabels[type]}
+    </span>
+  )
+}
+
+/** Card body shared by main (full-width) and room columns. */
+function EntryCard({ entry, type }: { entry: SlotEntry; type: EventType }) {
+  const secondary = secondaryText(entry)
+  return (
+    <div>
+      <div className="mb-1.5">
+        <TypeBadge type={type} />
+      </div>
+      <h3 className="text-base font-semibold text-dark-surface leading-tight break-words">
+        {entry.artist ? <ArtistName name={entry.artist} /> : entry.title}
+      </h3>
+      {secondary && <p className="text-sm text-outline leading-snug break-words">{secondary}</p>}
+      {entry.artist && entry.note && (
+        <p className="text-xs text-outline/80 leading-snug break-words">{entry.note}</p>
+      )}
+      {entry.timeRange && <p className="text-xs text-outline/80 leading-snug mt-0.5 break-words">{entry.timeRange}</p>}
+    </div>
+  )
+}
+
+function RoomColumn({ label, entry, type }: { label: string; entry?: SlotEntry; type: EventType }) {
+  return (
+    <div>
+      <p className="text-[10px] uppercase font-bold text-outline/70 tracking-widest mb-1.5">{label}</p>
+      {entry ? (
+        <EntryCard entry={entry} type={type} />
+      ) : (
+        <p className="text-sm text-outline/40 italic">—</p>
+      )}
+    </div>
+  )
+}
+
+function SlotRow({ slot, delay }: { slot: ScheduleSlot; delay: number }) {
+  return (
+    <div className="reveal flex gap-4" style={{ animationDelay: `${delay}ms` }}>
+      <div className="w-16 flex-shrink-0 pt-1">
+        <p className="font-bebas text-xl text-miami-gold leading-none">{slot.time}</p>
+        <p className="text-[10px] uppercase font-bold text-outline mt-1">{slot.ampm}</p>
+      </div>
+
+      <div className="flex-grow pb-6 border-b border-outline-variant/30">
+        {slot.main ? (
+          <EntryCard entry={slot.main} type={slot.type} />
+        ) : (
+          <div className="grid grid-cols-2 gap-3">
+            <RoomColumn label="Room 1" entry={slot.room1} type={slot.type} />
+            <RoomColumn label="Room 2" entry={slot.room2} type={slot.type} />
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 export default function SchedulePage() {
-  const [activeDay, setActiveDay] = useState(1)
+  const [activeDay, setActiveDay] = useState(0)
   const filtered = schedule.filter((e) => e.day === activeDay)
 
   return (
     <div className="px-6 pt-6 pb-6">
       <h1 className="reveal font-bebas text-5xl text-primary mb-6 leading-none">Schedule</h1>
 
-      <div
-        className="reveal flex gap-2 overflow-x-auto hide-scrollbar mb-8 -mx-6 px-6"
-        style={{ animationDelay: '70ms' }}
-      >
-        {[1, 2, 3, 4, 5].map((d) => (
+      <div className="reveal flex gap-1.5 mb-8" style={{ animationDelay: '70ms' }}>
+        {days.map((d) => (
           <button
-            key={d}
-            onClick={() => setActiveDay(d)}
-            className={`shrink-0 px-6 py-2 rounded-full font-bebas tracking-widest text-base transition-all duration-200 active:scale-95 ${
-              activeDay === d
+            key={d.n}
+            onClick={() => setActiveDay(d.n)}
+            className={`flex-1 px-1 py-1.5 rounded-lg text-center transition-all duration-200 active:scale-95 ${
+              activeDay === d.n
                 ? 'bg-primary text-white'
                 : 'bg-surface-container-highest text-dark-surface'
             }`}
           >
-            Day {d}
+            <span className="block font-bebas tracking-wide text-sm leading-none whitespace-nowrap">Day {d.n}</span>
+            <span
+              className={`block text-[8px] font-bold uppercase tracking-tight mt-0.5 whitespace-nowrap ${
+                activeDay === d.n ? 'text-white/80' : 'text-outline'
+              }`}
+            >
+              {d.dow} · {d.date}
+            </span>
           </button>
         ))}
       </div>
 
       <div className="space-y-6">
-        {filtered.map((event, i) => (
-          <div
-            key={event.id}
-            className="reveal flex gap-4"
-            style={{ animationDelay: `${i * 70}ms` }}
-          >
-            <div className="w-16 flex-shrink-0 pt-1">
-              <p className="font-bebas text-xl text-miami-gold leading-none">{event.time}</p>
-              <p className="text-[10px] uppercase font-bold text-outline mt-1">{event.ampm}</p>
-            </div>
-            <div className="flex-grow pb-6 border-b border-outline-variant/30">
-              <span
-                className={`inline-block px-3 py-0.5 rounded-full text-white text-[10px] font-bold uppercase mb-2 ${typeColors[event.type]}`}
-              >
-                {typeLabels[event.type]}
-              </span>
-              <h3 className="text-base font-semibold text-dark-surface leading-tight">{event.title}</h3>
-              <p className="text-sm text-outline">
-                {event.location}
-                {event.instructor && ` • ${event.instructor}`}
-              </p>
-            </div>
-          </div>
+        {filtered.map((slot, i) => (
+          <SlotRow key={slot.id} slot={slot} delay={i * 70} />
         ))}
       </div>
     </div>

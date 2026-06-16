@@ -1,5 +1,7 @@
 export interface Artist {
   id: string
+  /** 'instructor' couples vs 'dj'. DJs show only Instagram (no Privates). */
+  kind: 'instructor' | 'dj'
   name: string
   role: string
   origin: string
@@ -8,7 +10,7 @@ export interface Artist {
   bio: string
   /** Fun fact / curiosity — placeholder text, replace later. */
   curiosity: string
-  /** WhatsApp number, digits only with country code (e.g. 5511999990001). */
+  /** WhatsApp number, digits only with country code. Empty = no Privates button. */
   whatsapp: string
   /** Instagram handle WITHOUT the @ (e.g. brunogalhardo). */
   instagram: string
@@ -16,78 +18,70 @@ export interface Artist {
 
 const CURIOSITY_PLACEHOLDER =
   'Fun fact coming soon — this space will be filled with an interesting detail about the artist.'
+const BIO_PLACEHOLDER = 'Bio coming soon.'
 
-export const artists: Artist[] = [
-  {
-    id: '1',
-    name: 'Bruno Galhardo',
-    role: 'Master Instructor',
-    origin: 'Brazil',
-    photo: 'https://loremflickr.com/400/400/man,portrait?lock=11',
-    color: '#E8638A',
-    bio: 'World-renowned Brazilian Zouk master, known for fluid technique and musical interpretation.',
-    curiosity: CURIOSITY_PLACEHOLDER,
-    whatsapp: '5511999990001',
-    instagram: 'brunogalhardo',
-  },
-  {
-    id: '2',
-    name: 'Paloma Alves',
-    role: 'Choreographer',
-    origin: 'Brazil',
-    photo: 'https://loremflickr.com/400/400/woman,portrait?lock=22',
-    color: '#F5C842',
-    bio: 'Award-winning choreographer blending zouk with contemporary movement styles.',
-    curiosity: CURIOSITY_PLACEHOLDER,
-    whatsapp: '5511999990002',
-    instagram: 'palomaalves',
-  },
-  {
-    id: '3',
-    name: 'Kadu Pires',
-    role: 'Artist',
-    origin: 'Brazil',
-    photo: 'https://loremflickr.com/400/400/man,face?lock=33',
-    color: '#4BBFBF',
-    bio: 'Touring zouk artist and DJ — pioneer of the modern festival sound.',
-    curiosity: CURIOSITY_PLACEHOLDER,
-    whatsapp: '5511999990003',
-    instagram: 'kadupires',
-  },
-  {
-    id: '4',
-    name: 'Larissa',
-    role: 'Performer',
-    origin: 'Brazil',
-    photo: 'https://loremflickr.com/400/400/woman,face?lock=44',
-    color: '#E8722A',
-    bio: 'Rising star known for her expressive stage performances.',
-    curiosity: CURIOSITY_PLACEHOLDER,
-    whatsapp: '5511999990004',
-    instagram: 'larissa.zouk',
-  },
-  {
-    id: '5',
-    name: 'Walter',
-    role: 'Instructor',
-    origin: 'Brazil',
-    photo: 'https://loremflickr.com/400/400/man,smile?lock=55',
-    color: '#3A7D2C',
-    bio: 'Co-headlining instructor known for transitions and connection workshops.',
-    curiosity: CURIOSITY_PLACEHOLDER,
-    whatsapp: '5511999990005',
-    instagram: 'walter.zouk',
-  },
-  {
-    id: '6',
-    name: 'Brenda',
-    role: 'Instructor',
-    origin: 'Brazil',
-    photo: 'https://loremflickr.com/400/400/woman,smile?lock=66',
-    color: '#E8638A',
-    bio: 'Beloved instructor focused on ladies styling and musicality.',
-    curiosity: CURIOSITY_PLACEHOLDER,
-    whatsapp: '5511999990006',
-    instagram: 'brenda.zouk',
-  },
+// Placeholder photos until the real ones arrive. We optimize + drop in real photos later.
+const phArtist = (lock: number) => `https://loremflickr.com/600/600/dance,couple?lock=${lock}`
+const phDj = (lock: number) => `https://loremflickr.com/600/600/dj,music?lock=${lock}`
+
+const PALETTE = ['#E8638A', '#F5C842', '#4BBFBF', '#3A7D2C', '#E8722A']
+const color = (i: number) => PALETTE[i % PALETTE.length]
+
+// Real teacher couples taken from the official schedule. Photos / bios / Instagram /
+// WhatsApp are placeholders — the owner will send the real info to fill them in.
+const COUPLES = [
+  'Matheus & Nina',
+  'Luan & Adriana',
+  'Pedro & Ana',
+  'Rachel & Bruna',
+  'Renato & Tamara',
+  'Deborah & Douglas',
+  'Ryel & Romina',
+  'Jorge & Anabella',
+  'Paulo & Luiza',
+  'Val & Vanessa',
+  'Leandro & Nayara',
 ]
+
+// Festival DJs. Instagram comes later; DJs have no Privates contact.
+const DJS = [
+  'DJ Fab',
+  'DJ Kakah',
+  'DJ Matheus',
+  'DJ Sharkynho',
+  'DJ Yasaf',
+  'DJ Kel',
+  'DJ Bandido',
+  'DJ InstinX',
+  'DJ Val',
+]
+
+const instructors: Artist[] = COUPLES.map((name, i): Artist => ({
+  id: String(i + 1),
+  kind: 'instructor',
+  name,
+  role: 'Instructors',
+  origin: '',
+  photo: phArtist(101 + i),
+  color: color(i),
+  bio: BIO_PLACEHOLDER,
+  curiosity: CURIOSITY_PLACEHOLDER,
+  whatsapp: '',
+  instagram: '',
+}))
+
+const djs: Artist[] = DJS.map((name, i): Artist => ({
+  id: String(COUPLES.length + 1 + i),
+  kind: 'dj',
+  name,
+  role: 'DJ',
+  origin: '',
+  photo: phDj(201 + i),
+  color: color(i),
+  bio: BIO_PLACEHOLDER,
+  curiosity: CURIOSITY_PLACEHOLDER,
+  whatsapp: '',
+  instagram: '',
+}))
+
+export const artists: Artist[] = [...instructors, ...djs]

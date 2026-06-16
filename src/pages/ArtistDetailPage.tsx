@@ -60,7 +60,8 @@ export default function ArtistDetailPage() {
         <div className="absolute bottom-4 left-6 right-6">
           <h1 className="font-bebas text-5xl text-white leading-none">{artist.name}</h1>
           <p className="font-bebas text-miami-gold tracking-widest text-sm mt-1">
-            {artist.role} · {artist.origin}
+            {artist.role}
+            {artist.origin && ` · ${artist.origin}`}
           </p>
         </div>
       </div>
@@ -78,23 +79,25 @@ export default function ArtistDetailPage() {
           <p className="text-sm text-on-surface/60 italic leading-relaxed">{artist.curiosity}</p>
         </section>
 
-        {/* Privates CTA */}
-        <div className="reveal" style={{ animationDelay: '220ms' }}>
-          <a
-            href={privatesLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-3 w-full bg-flamingo-pink text-white py-4 rounded-full font-bebas text-2xl tracking-widest shadow-card active:scale-95 transition-transform"
-          >
-            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
-              school
-            </span>
-            Privates
-          </a>
-          <p className="text-center text-[11px] text-outline mt-2 mb-6">
-            Private lessons · contact the artist directly
-          </p>
-        </div>
+        {/* Privates CTA — instructors only (DJs show Instagram only) */}
+        {artist.kind === 'instructor' && (
+          <div className="reveal" style={{ animationDelay: '220ms' }}>
+            <a
+              href={privatesLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-3 w-full bg-flamingo-pink text-white py-4 rounded-full font-bebas text-2xl tracking-widest shadow-card active:scale-95 transition-transform"
+            >
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
+                school
+              </span>
+              Privates
+            </a>
+            <p className="text-center text-[11px] text-outline mt-2 mb-6">
+              Private lessons · contact the artist directly
+            </p>
+          </div>
+        )}
 
         {/* Instagram — smaller secondary button */}
         <a

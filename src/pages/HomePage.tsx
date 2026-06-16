@@ -68,15 +68,18 @@ export default function HomePage() {
       {/* HERO */}
       <section className="relative h-[80vh] min-h-[520px] w-full flex flex-col items-center justify-center overflow-hidden bg-wood-brown">
         <FadeInImage
-          alt="Festival Background"
+          alt="Miami Beach Zouk Festival"
           className="absolute inset-0 w-full h-full object-cover"
-          src="https://loremflickr.com/800/1200/miami,beach,pool,palm"
+          src="/home-hero.jpg"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-surface" />
+        {/* Readability overlay: uniform dim + top darkening + fade into the page below. */}
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-surface" />
 
         <div className="relative z-10 w-full px-6 flex flex-col items-center">
-          {/* Countdown */}
-          <div className="reveal flex gap-6 mb-10">
+          {/* Countdown — pushed down a bit (mt) with mb reduced by the same amount,
+              so the cards/buttons below stay exactly where they are. */}
+          <div className="reveal flex gap-6 mt-7 mb-3">
             {[
               { v: String(countdown.days).padStart(2, '0'), label: 'Days' },
               { v: String(countdown.hours).padStart(2, '0'), label: 'Hours' },
@@ -125,7 +128,7 @@ export default function HomePage() {
             SCHEDULE
           </button>
           <a
-            href="https://www.danceplace.com/pt/index/no/16431/Miami+Beach+Zouk+Festival-2027-Miami+Beach_+FL-United+States-Brazilian+Zouk+Dance+event"
+            href="https://www.danceplace.com/book/it/16431/MiamiAPP"
             target="_blank"
             rel="noopener noreferrer"
             className="reveal w-full mt-3 block text-center bg-flamingo-pink text-white py-4 rounded-full font-bebas text-2xl tracking-widest shadow-card active:scale-95 transition-transform"
@@ -153,8 +156,8 @@ export default function HomePage() {
                   className="w-full h-full object-cover rounded-full"
                 />
               </div>
-              <p className="w-full text-center font-bold mt-2 text-[11px] text-dark-surface truncate">
-                {a.name.split(' ')[0]}
+              <p className="w-full text-center font-bold mt-2 text-[10px] text-dark-surface leading-tight">
+                {a.name}
               </p>
             </button>
           ))}
