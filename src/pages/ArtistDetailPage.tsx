@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { artists } from '../data/artists'
 import FadeInImage from '../components/FadeInImage'
@@ -38,8 +39,26 @@ export default function ArtistDetailPage() {
   const privatesLink = `https://wa.me/${artist.whatsapp}?text=${privatesMessage}`
   const igLink = `https://instagram.com/${artist.instagram}`
 
+  // Swipe right (iOS-style back gesture) returns to the artists list.
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
+  const onTouchStart = (e: React.TouchEvent) => {
+    const t = e.touches[0]
+    touchStart.current = { x: t.clientX, y: t.clientY }
+  }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const start = touchStart.current
+    touchStart.current = null
+    if (!start) return
+    const t = e.changedTouches[0]
+    const dx = t.clientX - start.x
+    const dy = t.clientY - start.y
+    // Only a clearly horizontal right-swipe goes back.
+    if (dx < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return
+    navigate('/artists')
+  }
+
   return (
-    <div className="pb-10">
+    <div className="pb-10" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       {/* Hero photo */}
       <div className="skeleton relative h-80 w-full overflow-hidden">
         <FadeInImage

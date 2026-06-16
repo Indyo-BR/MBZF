@@ -33,7 +33,7 @@ export const days = [
   { n: 4, dow: 'MON', date: '26' },
 ]
 
-const TBD = 'Workshop - TBD'
+const TBD = 'Topic T.B.D.'
 
 export const schedule: ScheduleSlot[] = [
   // ───────── DAY 0 · Thursday, Apr 22 ─────────
