@@ -1,7 +1,6 @@
 import { useLocation } from 'react-router-dom'
 
-const TICKETS_URL =
-  'https://www.danceplace.com/pt/index/no/16431/Miami+Beach+Zouk+Festival-2027-Miami+Beach_+FL-United+States-Brazilian+Zouk+Dance+event'
+const TICKETS_URL = 'https://www.danceplace.com/book/it/16431/MiamiAPP'
 
 export default function TicketFab() {
   const location = useLocation()
