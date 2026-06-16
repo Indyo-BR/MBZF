@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { artists } from '../data/artists'
 import FadeInImage from '../components/FadeInImage'
 
@@ -12,7 +12,11 @@ const TABS: { kind: Kind; label: string }[] = [
 
 export default function ArtistsPage() {
   const navigate = useNavigate()
-  const [kind, setKind] = useState<Kind>('instructor')
+  // Active tab lives in the URL (?tab=dj) so it survives going back from a detail page.
+  const [searchParams, setSearchParams] = useSearchParams()
+  const kind: Kind = searchParams.get('tab') === 'dj' ? 'dj' : 'instructor'
+  const setKind = (k: Kind) =>
+    setSearchParams(k === 'dj' ? { tab: 'dj' } : {}, { replace: true })
   const [query, setQuery] = useState('')
   const filtered = artists.filter(
     (a) =>

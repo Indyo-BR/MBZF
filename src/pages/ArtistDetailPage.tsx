@@ -39,6 +39,9 @@ export default function ArtistDetailPage() {
   const privatesLink = `https://wa.me/${artist.whatsapp}?text=${privatesMessage}`
   const igLink = `https://instagram.com/${artist.instagram}`
 
+  // Go back to the list the artist belongs to (Artists vs DeeJays tab).
+  const backTo = artist.kind === 'dj' ? '/artists?tab=dj' : '/artists'
+
   // Swipe right (iOS-style back gesture) returns to the artists list.
   const touchStart = useRef<{ x: number; y: number } | null>(null)
   const onTouchStart = (e: React.TouchEvent) => {
@@ -54,7 +57,7 @@ export default function ArtistDetailPage() {
     const dy = t.clientY - start.y
     // Only a clearly horizontal right-swipe goes back.
     if (dx < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return
-    navigate('/artists')
+    navigate(backTo)
   }
 
   return (
@@ -69,7 +72,7 @@ export default function ArtistDetailPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-black/30" />
 
         <button
-          onClick={() => navigate('/artists')}
+          onClick={() => navigate(backTo)}
           aria-label="Back"
           className="absolute top-4 left-4 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white active:scale-90 transition-transform"
         >
