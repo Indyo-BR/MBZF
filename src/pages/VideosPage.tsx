@@ -11,11 +11,8 @@ interface Reel {
   youtubeId: string
 }
 
-// ⚠️ PLACEHOLDER clips — replace `youtubeId` with the festival's real videos.
 const reels: Reel[] = [
-  { id: '1', title: 'Zouk Sunset Vibes', youtubeId: 'kJQP7kiw5Fk' },
-  { id: '2', title: 'Main Stage Show', youtubeId: '9bZkp7q19f0' },
-  { id: '3', title: 'Pool Flamingo Party', youtubeId: 'RgKAFK5djSk' },
+  { id: '1', title: 'Miami Beach Zouk Festival', youtubeId: 'moKe5fZ5GtY' },
 ]
 
 export default function VideosPage() {

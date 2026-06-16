@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { EventType, ScheduleSlot, SlotEntry } from '../data/schedule'
 import { days, schedule } from '../data/schedule'
 
@@ -102,8 +102,30 @@ export default function SchedulePage() {
   const [activeDay, setActiveDay] = useState(0)
   const filtered = schedule.filter((e) => e.day === activeDay)
 
+  // Horizontal swipe changes the day, from anywhere in the scroll (vertical scroll stays native).
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
+  const onTouchStart = (e: React.TouchEvent) => {
+    const t = e.touches[0]
+    touchStart.current = { x: t.clientX, y: t.clientY }
+  }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const start = touchStart.current
+    touchStart.current = null
+    if (!start) return
+    const t = e.changedTouches[0]
+    const dx = t.clientX - start.x
+    const dy = t.clientY - start.y
+    // Only act on a clearly horizontal swipe.
+    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return
+    setActiveDay((d) => {
+      const i = days.findIndex((x) => x.n === d)
+      const ni = dx < 0 ? Math.min(i + 1, days.length - 1) : Math.max(i - 1, 0)
+      return days[ni].n
+    })
+  }
+
   return (
-    <div className="px-6 pt-6 pb-6">
+    <div className="px-6 pt-6 pb-6" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       <h1 className="reveal font-bebas text-5xl text-primary mb-6 leading-none">Schedule</h1>
 
       <div className="reveal flex gap-1.5 mb-8" style={{ animationDelay: '70ms' }}>
