@@ -125,33 +125,36 @@ export default function SchedulePage() {
   }
 
   return (
-    <div className="px-6 pt-6 pb-6" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-      <h1 className="reveal font-bebas text-5xl text-primary mb-6 leading-none">Schedule</h1>
+    <div className="pb-6" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+      {/* Title + day selector stay pinned while the slots scroll underneath. */}
+      <div className="sticky top-0 z-30 bg-surface px-6 pt-6 pb-3 shadow-[0_6px_8px_-6px_rgba(31,27,18,0.12)]">
+        <h1 className="reveal font-bebas text-5xl text-primary mb-5 leading-none">Schedule</h1>
 
-      <div className="reveal flex gap-1.5 mb-8" style={{ animationDelay: '70ms' }}>
-        {days.map((d) => (
-          <button
-            key={d.n}
-            onClick={() => setActiveDay(d.n)}
-            className={`flex-1 px-1 py-1.5 rounded-lg text-center transition-all duration-200 active:scale-95 ${
-              activeDay === d.n
-                ? 'bg-primary text-white'
-                : 'bg-surface-container-highest text-dark-surface'
-            }`}
-          >
-            <span className="block font-bebas tracking-wide text-sm leading-none whitespace-nowrap">Day {d.n}</span>
-            <span
-              className={`block text-[8px] font-bold uppercase tracking-tight mt-0.5 whitespace-nowrap ${
-                activeDay === d.n ? 'text-white/80' : 'text-outline'
+        <div className="reveal flex gap-1.5" style={{ animationDelay: '70ms' }}>
+          {days.map((d) => (
+            <button
+              key={d.n}
+              onClick={() => setActiveDay(d.n)}
+              className={`flex-1 px-1 py-1.5 rounded-lg text-center transition-all duration-200 active:scale-95 ${
+                activeDay === d.n
+                  ? 'bg-primary text-white'
+                  : 'bg-surface-container-highest text-dark-surface'
               }`}
             >
-              {d.dow} · {d.date}
-            </span>
-          </button>
-        ))}
+              <span className="block font-bebas tracking-wide text-sm leading-none whitespace-nowrap">Day {d.n}</span>
+              <span
+                className={`block text-[8px] font-bold uppercase tracking-tight mt-0.5 whitespace-nowrap ${
+                  activeDay === d.n ? 'text-white/80' : 'text-outline'
+                }`}
+              >
+                {d.dow} · {d.date}
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="px-6 pt-6 space-y-6">
         {filtered.map((slot, i) => (
           <SlotRow key={slot.id} slot={slot} delay={i * 70} />
         ))}

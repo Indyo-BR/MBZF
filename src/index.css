@@ -4,6 +4,18 @@
 
 * { -webkit-tap-highlight-color: transparent; }
 
+/* Press feedback on every tappable control (same shrink as the bottom nav) */
+button,
+a,
+[role='button'] {
+  transition: transform 0.15s ease;
+}
+button:active,
+a:active,
+[role='button']:active {
+  transform: scale(0.92);
+}
+
 html, body, #root {
   height: 100%;
   overflow: hidden;
@@ -146,4 +158,5 @@ body {
   .page-fade { animation: none; }
   .reveal { animation: none; opacity: 1; transform: none; }
   .skeleton { animation: none; }
+  button:active, a:active, [role='button']:active { transform: none; }
 }
