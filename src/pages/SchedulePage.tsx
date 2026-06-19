@@ -56,9 +56,9 @@ function EntryCard({ entry, type }: { entry: SlotEntry; type: EventType }) {
       </h3>
       {secondary && <p className="text-sm text-outline leading-snug break-words">{secondary}</p>}
       {entry.artist && entry.note && (
-        <p className="text-xs text-outline/80 leading-snug break-words">{entry.note}</p>
+        <p className="text-xs text-outline leading-snug break-words">{entry.note}</p>
       )}
-      {entry.timeRange && <p className="text-xs text-outline/80 leading-snug mt-0.5 break-words">{entry.timeRange}</p>}
+      {entry.timeRange && <p className="text-xs text-outline leading-snug mt-0.5 break-words">{entry.timeRange}</p>}
     </div>
   )
 }
@@ -66,11 +66,11 @@ function EntryCard({ entry, type }: { entry: SlotEntry; type: EventType }) {
 function RoomColumn({ label, entry, type }: { label: string; entry?: SlotEntry; type: EventType }) {
   return (
     <div>
-      <p className="text-[10px] uppercase font-bold text-outline/70 tracking-widest mb-1.5">{label}</p>
+      <p className="text-[10px] uppercase font-bold text-outline tracking-widest mb-1.5">{label}</p>
       {entry ? (
         <EntryCard entry={entry} type={type} />
       ) : (
-        <p className="text-sm text-outline/40 italic">—</p>
+        <p className="text-sm text-outline/60 italic">—</p>
       )}
     </div>
   )
@@ -128,7 +128,10 @@ export default function SchedulePage() {
     <div className="pb-6" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       {/* Title + day selector stay pinned while the slots scroll underneath. */}
       <div className="sticky top-0 z-30 bg-surface px-6 pt-6 pb-3 shadow-[0_6px_8px_-6px_rgba(31,27,18,0.12)]">
-        <h1 className="reveal font-bebas text-5xl text-primary mb-5 leading-none">Schedule</h1>
+        <h1 className="reveal font-bebas text-5xl text-primary mb-1 leading-none">Schedule</h1>
+        <p className="reveal text-sm text-outline mb-4" style={{ animationDelay: '40ms' }}>
+          Swipe sideways to change the day.
+        </p>
 
         <div className="reveal flex gap-1.5" style={{ animationDelay: '70ms' }}>
           {days.map((d) => (
@@ -143,7 +146,7 @@ export default function SchedulePage() {
             >
               <span className="block font-bebas tracking-wide text-sm leading-none whitespace-nowrap">Day {d.n}</span>
               <span
-                className={`block text-[8px] font-bold uppercase tracking-tight mt-0.5 whitespace-nowrap ${
+                className={`block text-[10px] font-bold uppercase tracking-tight mt-0.5 whitespace-nowrap ${
                   activeDay === d.n ? 'text-white/80' : 'text-outline'
                 }`}
               >

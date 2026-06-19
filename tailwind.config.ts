@@ -16,7 +16,7 @@ export default {
         primary: '#755b00',
         secondary: '#a83159',
         'on-surface': '#1f1b12',
-        outline: '#7f7662',
+        outline: '#6b6354',
         'outline-variant': '#d1c5ae',
         'surface-container': '#f6edde',
         'surface-container-highest': '#eae1d3',

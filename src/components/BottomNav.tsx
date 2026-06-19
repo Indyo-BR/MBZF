@@ -17,7 +17,7 @@ export default function BottomNav() {
           to={to}
           end={to === '/'}
           className={({ isActive }) =>
-            `relative flex flex-col items-center justify-center py-1 px-3 rounded-full transition-transform duration-150 active:scale-90 ${
+            `relative flex flex-col items-center justify-center min-h-[44px] py-1 px-3 rounded-full transition-transform duration-150 active:scale-90 ${
               isActive ? 'bg-secondary-container text-on-secondary-container' : 'text-on-surface'
             }`
           }

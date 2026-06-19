@@ -27,7 +27,10 @@ export default function ArtistsPage() {
 
   return (
     <div className="px-6 pt-6 pb-6">
-      <h1 className="reveal font-bebas text-5xl text-primary mb-6 leading-none">Artists</h1>
+      <h1 className="reveal font-bebas text-5xl text-primary mb-2 leading-none">Artists</h1>
+      <p className="reveal text-sm text-outline mb-6" style={{ animationDelay: '40ms' }}>
+        Instructors and DeeJays of the festival.
+      </p>
 
       {/* Artists / DeeJays toggle */}
       <div className="reveal flex gap-2 mb-6" style={{ animationDelay: '50ms' }}>
@@ -53,9 +56,19 @@ export default function ArtistsPage() {
           onChange={(e) => setQuery(e.target.value)}
           className="w-full pl-12 pr-4 py-3 rounded-full border border-outline-variant bg-surface-container text-sm focus:border-flamingo-pink outline-none transition-all"
           placeholder="Search artists..."
-          type="text"
+          type="search"
+          inputMode="search"
+          aria-label="Search artists"
         />
       </div>
+
+      {filtered.length === 0 && (
+        <div className="reveal flex flex-col items-center text-center pt-10">
+          <span className="material-symbols-outlined text-outline-variant text-5xl mb-2">search_off</span>
+          <p className="font-bebas text-2xl text-primary tracking-wide">No artists found</p>
+          <p className="text-sm text-outline mt-1">Try a different name.</p>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-4">
         {filtered.map((a, i) => (

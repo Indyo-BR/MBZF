@@ -17,6 +17,9 @@ export default function ArtistDetailPage() {
   const navigate = useNavigate()
   const artist = artists.find((a) => a.id === id)
 
+  // Kept above the early return so hooks run in the same order every render.
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
+
   if (!artist) {
     return (
       <div className="px-6 pt-12 text-center">
@@ -43,7 +46,6 @@ export default function ArtistDetailPage() {
   const backTo = artist.kind === 'dj' ? '/artists?tab=dj' : '/artists'
 
   // Swipe right (iOS-style back gesture) returns to the artists list.
-  const touchStart = useRef<{ x: number; y: number } | null>(null)
   const onTouchStart = (e: React.TouchEvent) => {
     const t = e.touches[0]
     touchStart.current = { x: t.clientX, y: t.clientY }
@@ -68,6 +70,7 @@ export default function ArtistDetailPage() {
           src={artist.photo}
           alt={artist.name}
           className="w-full h-full object-cover"
+          priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-black/30" />
 
@@ -92,13 +95,13 @@ export default function ArtistDetailPage() {
         {/* Biography */}
         <section className="reveal mb-6" style={{ animationDelay: '60ms' }}>
           <h2 className="font-bebas text-2xl text-primary tracking-wide mb-2">Biography</h2>
-          <p className="text-sm text-on-surface/80 leading-relaxed">{artist.bio}</p>
+          <p className="text-base text-on-surface/80 leading-relaxed">{artist.bio}</p>
         </section>
 
         {/* Curiosity */}
         <section className="reveal mb-8" style={{ animationDelay: '140ms' }}>
           <h2 className="font-bebas text-2xl text-primary tracking-wide mb-2">Did you know?</h2>
-          <p className="text-sm text-on-surface/60 italic leading-relaxed">{artist.curiosity}</p>
+          <p className="text-sm text-on-surface/75 italic leading-relaxed">{artist.curiosity}</p>
         </section>
 
         {/* Privates CTA — instructors only (DJs show Instagram only) */}

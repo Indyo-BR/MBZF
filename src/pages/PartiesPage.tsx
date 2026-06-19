@@ -34,7 +34,7 @@ export default function PartiesPage() {
               className="skeleton relative w-full rounded-2xl overflow-hidden shadow-card"
               style={{ aspectRatio: p.aspect }}
             >
-              <FadeInImage src={p.image} alt={p.name} className="w-full h-full object-cover" />
+              <FadeInImage src={p.image} alt={p.name} className="w-full h-full object-cover" priority={i === 0} />
             </div>
             <p className="font-bebas text-miami-gold text-sm tracking-widest mt-2 ml-1">{p.date}</p>
           </div>

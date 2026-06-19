@@ -71,6 +71,7 @@ export default function HomePage() {
           alt="Miami Beach Zouk Festival"
           className="absolute inset-0 w-full h-full object-cover"
           src="/home-hero.jpg"
+          priority
         />
         {/* Readability overlay: uniform dim + top darkening + fade into the page below. */}
         <div className="absolute inset-0 bg-black/30" />

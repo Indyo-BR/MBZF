@@ -11,8 +11,9 @@ export default function FadeInImage({
   className = '',
   onLoad,
   onError,
+  priority = false,
   ...props
-}: ImgHTMLAttributes<HTMLImageElement>) {
+}: ImgHTMLAttributes<HTMLImageElement> & { priority?: boolean }) {
   const [loaded, setLoaded] = useState(false)
 
   const handleLoad = (e: SyntheticEvent<HTMLImageElement>) => {
@@ -27,7 +28,8 @@ export default function FadeInImage({
   return (
     <img
       {...props}
-      loading="lazy"
+      loading={priority ? 'eager' : 'lazy'}
+      fetchPriority={priority ? 'high' : 'auto'}
       decoding="async"
       onLoad={handleLoad}
       onError={handleError}

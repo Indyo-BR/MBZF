@@ -16,6 +16,18 @@ a:active,
   transform: scale(0.92);
 }
 
+/* Visible keyboard focus — flamingo ring, on-brand. Pointer taps stay clean
+   (focus-visible only shows the ring for keyboard / assistive navigation). */
+:focus { outline: none; }
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+[role='button']:focus-visible,
+[tabindex]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(232, 99, 138, 0.6); /* flamingo-pink */
+}
+
 html, body, #root {
   height: 100%;
   overflow: hidden;
@@ -23,7 +35,10 @@ html, body, #root {
 
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #fff8f1;
+  /* The app frame (max-w-md) stays pure cream; this soft tropical wash only
+     shows in the margins on tablet/desktop so wide screens don't look empty. */
+  background: linear-gradient(160deg, #fdeef1 0%, #fff8f1 42%, #ecf6f5 100%);
+  background-attachment: fixed;
   color: #1f1b12;
 }
 
@@ -42,21 +57,6 @@ body {
   overscroll-behavior-y: contain;
   /* Clear the fixed bottom nav + the device's bottom safe area. */
   padding-bottom: calc(88px + env(safe-area-inset-bottom));
-}
-
-.marquee-wrapper {
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.marquee-content {
-  display: inline-block;
-  animation: marquee 18s linear infinite;
-}
-
-@keyframes marquee {
-  0% { transform: translateX(100vw); }
-  100% { transform: translateX(-100%); }
 }
 
 .material-symbols-outlined {
