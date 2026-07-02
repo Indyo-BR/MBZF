@@ -17,7 +17,7 @@ export interface Artist {
 }
 
 const CURIOSITY_PLACEHOLDER =
-  'Fun fact coming soon — this space will be filled with an interesting detail about the artist.'
+  'Fun fact coming soon: this space will be filled with an interesting detail about the artist.'
 const BIO_PLACEHOLDER = 'Bio coming soon.'
 
 // Placeholder photos until the real ones arrive. We optimize + drop in real photos later.

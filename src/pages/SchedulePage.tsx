@@ -80,7 +80,8 @@ function SlotRow({ slot, delay }: { slot: ScheduleSlot; delay: number }) {
   return (
     <div className="reveal flex gap-4" style={{ animationDelay: `${delay}ms` }}>
       <div className="w-16 flex-shrink-0 pt-1">
-        <p className="font-bebas text-xl text-miami-gold leading-none">{slot.time}</p>
+        {/* Dark gold (primary) — bright miami-gold fails contrast on the cream bg. */}
+        <p className="font-bebas text-xl text-primary leading-none">{slot.time}</p>
         <p className="text-[10px] uppercase font-bold text-outline mt-1">{slot.ampm}</p>
       </div>
 

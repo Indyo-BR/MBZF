@@ -36,7 +36,8 @@ export default function PartiesPage() {
             >
               <FadeInImage src={p.image} alt={p.name} className="w-full h-full object-cover" priority={i === 0} />
             </div>
-            <p className="font-bebas text-miami-gold text-sm tracking-widest mt-2 ml-1">{p.date}</p>
+            {/* Dark gold (primary) — bright miami-gold fails contrast on the cream bg. */}
+            <p className="font-bebas text-primary text-sm tracking-widest mt-2 ml-1">{p.date}</p>
           </div>
         ))}
       </div>

@@ -38,7 +38,7 @@ const mapsOptions = [
 const CAL_TITLE = 'Miami Beach Zouk Festival 2027'
 const CAL_VENUE = 'Holiday Inn Miami Beach-Oceanfront, Miami Beach, FL'
 const CAL_DETAILS =
-  'Brazilian Zouk dance festival — workshops, parties and shows. https://mbzf.trybobr.com'
+  'Brazilian Zouk dance festival: workshops, parties and shows. https://mbzf.trybobr.com'
 
 const googleCalUrl =
   'https://calendar.google.com/calendar/render?action=TEMPLATE' +

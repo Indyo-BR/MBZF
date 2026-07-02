@@ -5,8 +5,9 @@ const TICKETS_URL = 'https://www.danceplace.com/book/it/16431/MiamiAPP'
 export default function TicketFab() {
   const location = useLocation()
 
-  // Hide on home (per design hierarchy)
-  if (location.pathname === '/') return null
+  // Hide on home (per design hierarchy) and on the immersive Videos page,
+  // where nothing scrolls and the FAB would permanently cover the video.
+  if (location.pathname === '/' || location.pathname === '/videos') return null
 
   return (
     <a
