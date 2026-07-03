@@ -33,7 +33,10 @@ const TBD_TITLE = 'Topic T.B.D.'
 
 const APP_ID = process.env.ONESIGNAL_APP_ID || 'e62fa68b-91d7-4b40-aa7d-97ec3bc6de16'
 const REST_KEY = process.env.ONESIGNAL_REST_API_KEY || ''
-const SEGMENT = process.env.MBZF_SEGMENT || 'Subscribed Users'
+// OneSignal's built-in segment that includes every push subscription. This
+// app has no "Subscribed Users" segment (the older default), so targeting that
+// name returns "All included players are not subscribed".
+const SEGMENT = process.env.MBZF_SEGMENT || 'Total Subscriptions'
 
 // ── helpers ────────────────────────────────────────────────────────────────
 
