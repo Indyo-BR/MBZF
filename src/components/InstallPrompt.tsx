@@ -69,10 +69,10 @@ export default function InstallPrompt() {
         ) : (
           <>
             <h3 className="font-bebas text-2xl text-primary tracking-wide text-center">
-              Install the App
+              Install for Alerts
             </h3>
             <p className="text-center text-xs text-outline mt-1 mb-5 px-2">
-              Add Miami Beach Zouk to your Home Screen for the full experience.
+              Install the app so it can <strong className="text-flamingo-pink">notify you when your classes start</strong>, when parties kick off, and with festival updates. Notifications only work from the installed app.
             </p>
             {platform === 'ios' ? (
               <>

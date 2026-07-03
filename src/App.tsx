@@ -5,6 +5,7 @@ import Header from './components/Header'
 import BottomNav from './components/BottomNav'
 import TicketFab from './components/TicketFab'
 import InstallPrompt from './components/InstallPrompt'
+import NotificationsNudge from './components/NotificationsNudge'
 import HomePage from './pages/HomePage'
 import SchedulePage from './pages/SchedulePage'
 import PartiesPage from './pages/PartiesPage'
@@ -58,6 +59,7 @@ export default function App() {
       <TicketFab />
       <BottomNav />
       <InstallPrompt />
+      <NotificationsNudge />
     </div>
   )
 }
