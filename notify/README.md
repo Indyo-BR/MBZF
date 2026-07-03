@@ -33,6 +33,19 @@ The class delay applies only to not-yet-sent classes and **auto-resets at 06:00
 Miami time** (the boundary sits at 6 AM so late-night parties don't roll the day
 over). `MBZF_NOW=<iso>` overrides "now" for rehearsal/testing.
 
+## Announcements (Hermes → queue → watcher)
+
+Ad-hoc announcements don't use sudo. Hermes (after confirming the text with the
+owner) appends one line to `state/announce.queue`; the systemd path unit
+`mbzf-announce.path` fires `announce-drain.sh` as `ubuntu` (the only key
+holder), which sends each line as a push and logs the outcome to
+`state/announce.log` (hermes-readable). Lines prefixed `DRY:` are dry-run.
+
+Why a queue: the sudoers+wrapper route (`mbzf-send.sh`, kept for manual use)
+requires an exact command; the gateway's economy model reliably mangles sudo
+invocations, and every variant was correctly denied. Writing one line to a
+file is model-proof.
+
 State lives in `state/sent.log` (git-ignored): one line per handled key
 (`countdown:100  <iso>  sent <id>` or `... missed`). Dedupe reads it; a key is
 never sent twice. `--dry-run` never writes.

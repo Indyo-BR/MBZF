@@ -1,0 +1,8 @@
+[Unit]
+Description=Watch the MBZF announce queue (Hermes appends, drain sends)
+
+[Path]
+PathChanged=/opt/mbzf-notify/state/announce.queue
+
+[Install]
+WantedBy=multi-user.target

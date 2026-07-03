@@ -1,0 +1,9 @@
+[Unit]
+Description=MBZF announce drain (send queued announcements)
+
+[Service]
+Type=oneshot
+User=ubuntu
+WorkingDirectory=/opt/mbzf-notify
+ExecStart=/usr/bin/bash /opt/mbzf-notify/announce-drain.sh
+Nice=10
