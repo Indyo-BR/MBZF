@@ -15,6 +15,7 @@
 //   status            print current time, milestones, class delay and state.
 //   delay <min>       shift today's not-yet-sent classes by <min> (or +N / -N).
 //   reset             clear the class delay now (also auto-resets at 06:00 ET).
+//   send "<msg>"      ad-hoc announcement to all subscribers (owner-triggered).
 
 import { DateTime } from 'luxon'
 import { readFileSync, writeFileSync, existsSync, appendFileSync, mkdirSync, readdirSync } from 'node:fs'
@@ -312,6 +313,36 @@ function cmdReset() {
   console.log('[reset] class delay back to 0.')
 }
 
+/**
+ * Ad-hoc announcement to all subscribers. Owner-triggered (via Hermes), which
+ * always confirms the text first. Not deduped — each call is a fresh send.
+ *   send "<message>"            → title defaults to config.title
+ *   send "<title>" "<body>"     → explicit title + body
+ *   send --dry-run "<message>"  → print only, no send
+ */
+async function cmdSend(args) {
+  const dry = args.includes('--dry-run')
+  const rest = args.filter((a) => a !== '--dry-run')
+  const cfg = loadJSON(join(CONFIG_DIR, 'countdown.json'))
+  let title, body
+  if (rest.length >= 2) {
+    title = rest[0]
+    body = rest.slice(1).join(' ')
+  } else if (rest.length === 1) {
+    title = cfg.title
+    body = rest[0]
+  } else {
+    console.error('usage: mbzf-notify send [--dry-run] "<message>" | "<title>" "<body>"')
+    process.exit(2)
+  }
+  if (dry) {
+    console.log(`[dry] WOULD SEND announcement: "${title}" — ${body}`)
+    return
+  }
+  const id = await sendPush({ title, body, key: `announce:${Date.now()}` })
+  console.log(`[sent] announcement "${title}" → ${id}`)
+}
+
 function cmdStatus() {
   const cfg = loadJSON(join(CONFIG_DIR, 'countdown.json'))
   const now = nowInZone(cfg.timezone)
@@ -366,9 +397,11 @@ try {
   else if (cmd === 'status') cmdStatus()
   else if (cmd === 'delay') cmdDelay(process.argv[3])
   else if (cmd === 'reset') cmdReset()
+  else if (cmd === 'send') await cmdSend(process.argv.slice(3))
   else {
     console.error(
-      `unknown command: ${cmd}\nusage: mbzf-notify [run [--dry-run] | status | delay <min> | reset]`
+      `unknown command: ${cmd}\n` +
+        'usage: mbzf-notify [run [--dry-run] | status | delay <min> | reset | send "<msg>"]'
     )
     process.exit(2)
   }
