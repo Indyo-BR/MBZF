@@ -225,7 +225,9 @@ function evaluateCountdown(cfg, now, sent) {
     const key = `countdown:${ms.days}`
     const fire = fireMomentFor(cfg, ms.days)
     const deadline = fire.plus(catchUp)
-    const item = { key, days: ms.days, fire, title: cfg.title, body: ms.body }
+    // Title is the milestone headline (e.g. "100 days to go 🦩"); the festival
+    // name shows once via iOS's own "from <app>" line, so never repeat it here.
+    const item = { key, days: ms.days, fire, title: ms.title || cfg.title, body: ms.body }
     if (sent.has(key)) continue // already handled
     if (now < fire) pending.push(item)
     else if (now <= deadline) due.push(item)
@@ -332,8 +334,10 @@ async function cmdSend(args) {
     title = rest[0]
     body = rest.slice(1).join(' ')
   } else if (rest.length === 1) {
-    title = cfg.title
-    body = rest[0]
+    // The message IS the title so it reads clean under iOS's "from <app>" line
+    // (no repeated festival name). Body is a light CTA.
+    title = rest[0]
+    body = cfg.announceBody || 'Tap to open 🦩'
   } else {
     console.error('usage: mbzf-notify send [--dry-run] "<message>" | "<title>" "<body>"')
     process.exit(2)

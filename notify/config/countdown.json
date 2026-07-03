@@ -5,11 +5,11 @@
   "catchUpHours": 6,
   "title": "Miami Beach Zouk Festival",
   "milestones": [
-    { "days": 200, "body": "200 days to go 🦩 Miami Beach Zouk Festival — April 22–26, 2027." },
-    { "days": 100, "body": "100 days to go! 🦩 Time to get your Zouk ready. April 22–26, 2027." },
-    { "days": 60,  "body": "60 days out 🦩 Miami Beach Zouk Festival is coming. Grab your pass!" },
-    { "days": 30,  "body": "One month to go! 🦩 Miami Beach Zouk Festival, April 22–26." },
-    { "days": 15,  "body": "2 weeks to go! 🦩 Miami Beach Zouk Festival is almost here." },
-    { "days": 1,   "body": "Tomorrow! 🦩 Miami Beach Zouk Festival kicks off. See you on the floor." }
+    { "days": 200, "title": "200 days to go 🦩", "body": "Save the date: April 22–26, 2027." },
+    { "days": 100, "title": "100 days to go! 🦩", "body": "Time to get your Zouk ready." },
+    { "days": 60,  "title": "60 days out 🦩", "body": "Grab your pass, it's coming!" },
+    { "days": 30,  "title": "One month to go! 🦩", "body": "April 22–26. Get ready to dance." },
+    { "days": 15,  "title": "2 weeks to go! 🦩", "body": "Almost here. Pack your dancing shoes." },
+    { "days": 1,   "title": "Tomorrow! 🦩", "body": "It kicks off. See you on the floor!" }
   ]
 }
