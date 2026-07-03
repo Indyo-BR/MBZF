@@ -12,8 +12,9 @@ if ('serviceWorker' in navigator) {
     })
   } else {
     // In dev, make sure no stale SW is caching Vite modules.
+    // Spare OneSignal's worker (scope /push/) — it handles push, not caching.
     navigator.serviceWorker.getRegistrations().then((regs) => {
-      regs.forEach((r) => r.unregister())
+      regs.filter((r) => !r.scope.includes('/push/')).forEach((r) => r.unregister())
     })
     if (window.caches) {
       caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)))

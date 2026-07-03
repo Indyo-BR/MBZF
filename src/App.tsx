@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
+import { initPush } from './lib/push'
 import Header from './components/Header'
 import BottomNav from './components/BottomNav'
 import TicketFab from './components/TicketFab'
@@ -42,6 +43,12 @@ function RoutedPages() {
 }
 
 export default function App() {
+  // Init the push SDK on every route (deep links included) so returning
+  // subscribers stay registered. No prompt here — AlertsButton owns that.
+  useEffect(() => {
+    initPush().catch(() => {})
+  }, [])
+
   return (
     <div className="page-container max-w-md mx-auto bg-surface relative shadow-xl">
       <Header />

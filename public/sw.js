@@ -1,4 +1,4 @@
-const CACHE_NAME = 'miami-zouk-v3';
+const CACHE_NAME = 'miami-zouk-v4';
 const STATIC_ASSETS = ['/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png'];
 
 self.addEventListener('install', (e) => {
@@ -20,6 +20,10 @@ self.addEventListener('fetch', (e) => {
   if (request.method !== 'GET') return;
 
   const url = new URL(request.url);
+
+  // Never intercept OneSignal traffic (SDK or API) — serving a stale cached
+  // response would break the push subscription flow intermittently.
+  if (url.hostname === 'onesignal.com' || url.hostname.endsWith('.onesignal.com')) return;
 
   // SPA navigation: serve cached app shell, fall back to network.
   if (request.mode === 'navigate') {

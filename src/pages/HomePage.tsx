@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { artists } from '../data/artists'
 import FadeInImage from '../components/FadeInImage'
+import AlertsButton from '../components/AlertsButton'
 
 function getCountdown() {
   const target = new Date('2027-04-22T00:00:00').getTime()
@@ -137,6 +138,9 @@ export default function HomePage() {
           >
             Buy Tickets
           </a>
+
+          {/* Push alerts opt-in — secondary style so the CTAs above keep the stage */}
+          <AlertsButton />
         </div>
       </section>
 
