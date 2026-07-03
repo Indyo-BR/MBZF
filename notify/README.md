@@ -9,21 +9,29 @@ due "now" in Miami time (`America/New_York`, via luxon so DST is correct) and
 sends immediately via the OneSignal REST API. No reliance on OneSignal's own
 future-scheduling.
 
-## Phase 2 (this): countdown milestones
+## What it sends
 
-200 / 100 / 60 / 30 / 15 / 1 days before `2027-04-22`, at 10:00 Miami time.
-Config: [config/countdown.json](config/countdown.json) (dates, copy, catch-up).
-
-Phase 3 will add class-start alerts + a Telegram/Hermes delay command, reusing the
-same send/dedupe/catch-up core.
+- **Countdown milestones** — 200 / 100 / 60 / 30 / 15 / 1 days before `2027-04-22`
+  at 10:00 Miami time. Config: [config/countdown.json](config/countdown.json).
+- **Class-start alerts** — one push at each workshop's start time (only
+  `type: workshop` slots), shifted by the current delay. Data:
+  [config/schedule.json](config/schedule.json), regenerated from the app's
+  `src/data/schedule.ts` with `node export-schedule.mjs`.
 
 ## Commands
 
 ```bash
-node src/mbzf-notify.mjs status          # now + every milestone's fire time/UTC/state
-node src/mbzf-notify.mjs run --dry-run    # print what would send, send nothing
-node src/mbzf-notify.mjs run              # send anything due, record it
+node src/mbzf-notify.mjs status           # now, milestones, class delay, what's due
+node src/mbzf-notify.mjs run --dry-run     # print what would send, send nothing
+node src/mbzf-notify.mjs run               # send anything due, record it
+node src/mbzf-notify.mjs delay 20          # push today's remaining classes 20 min later
+node src/mbzf-notify.mjs delay +15         # add 15 more (relative); -N pulls earlier
+node src/mbzf-notify.mjs reset             # clear the delay now
 ```
+
+The class delay applies only to not-yet-sent classes and **auto-resets at 06:00
+Miami time** (the boundary sits at 6 AM so late-night parties don't roll the day
+over). `MBZF_NOW=<iso>` overrides "now" for rehearsal/testing.
 
 State lives in `state/sent.log` (git-ignored): one line per handled key
 (`countdown:100  <iso>  sent <id>` or `... missed`). Dedupe reads it; a key is
