@@ -1,0 +1,15 @@
+{
+  "target": "2027-04-22",
+  "timezone": "America/New_York",
+  "sendLocalTime": "10:00",
+  "catchUpHours": 6,
+  "title": "Miami Beach Zouk Festival",
+  "milestones": [
+    { "days": 200, "body": "200 days to go 🦩 Miami Beach Zouk Festival — April 22–26, 2027." },
+    { "days": 100, "body": "100 days to go! 🦩 Time to get your Zouk ready. April 22–26, 2027." },
+    { "days": 60,  "body": "60 days out 🦩 Miami Beach Zouk Festival is coming. Grab your pass!" },
+    { "days": 30,  "body": "One month to go! 🦩 Miami Beach Zouk Festival, April 22–26." },
+    { "days": 15,  "body": "2 weeks to go! 🦩 Miami Beach Zouk Festival is almost here." },
+    { "days": 1,   "body": "Tomorrow! 🦩 Miami Beach Zouk Festival kicks off. See you on the floor." }
+  ]
+}

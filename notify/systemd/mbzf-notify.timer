@@ -1,0 +1,14 @@
+[Unit]
+Description=Fire the MBZF push scheduler on a schedule
+
+[Timer]
+# Every 5 minutes. The countdown catch-up window is 6h, so 5-min resolution is
+# safe. Phase 3 (class alerts) tightens this to *:0/1 for minute precision.
+OnCalendar=*:0/5
+# If the VPS was down at a trigger, run once on boot; the catch-up window in
+# the script decides whether a missed moment still deserves a send.
+Persistent=true
+AccuracySec=20s
+
+[Install]
+WantedBy=timers.target

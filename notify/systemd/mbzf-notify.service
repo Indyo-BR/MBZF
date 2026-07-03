@@ -1,0 +1,14 @@
+[Unit]
+Description=MBZF push scheduler (one-shot, fired by mbzf-notify.timer)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntu
+WorkingDirectory=/opt/mbzf-notify
+# Holds ONESIGNAL_REST_API_KEY (mode 600, never committed).
+EnvironmentFile=/opt/mbzf-notify/.env
+# NODE_BIN is resolved at install time (see deploy.sh) — systemd needs an absolute path.
+ExecStart=NODE_BIN src/mbzf-notify.mjs run
+Nice=10

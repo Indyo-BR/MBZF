@@ -1,0 +1,18 @@
+{
+  "name": "mbzf-notify",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MBZF push scheduler — fires OneSignal notifications from the festival timeline (VPS-side, not part of the web app).",
+  "bin": {
+    "mbzf-notify": "src/mbzf-notify.mjs"
+  },
+  "scripts": {
+    "run": "node src/mbzf-notify.mjs run",
+    "dry": "node src/mbzf-notify.mjs run --dry-run",
+    "status": "node src/mbzf-notify.mjs status"
+  },
+  "dependencies": {
+    "luxon": "^3.5.0"
+  }
+}
