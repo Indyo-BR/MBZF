@@ -299,11 +299,17 @@ function cmdDelay(arg) {
     process.exit(2)
   }
   const cur = readOffset(now)
-  const next = /^[+-]/.test(arg) ? cur + parseInt(arg, 10) : parseInt(arg, 10)
+  let next = /^[+-]/.test(arg) ? cur + parseInt(arg, 10) : parseInt(arg, 10)
   if (Number.isNaN(next)) {
     console.error(`invalid minutes: ${arg}`)
     process.exit(2)
   }
+  // Clamp: an absurd offset (typo / model mishap) must not be able to shove
+  // future classes past the 10-min catch-up window — "missed" is recorded in
+  // sent.log and is PERMANENT (dedupe never retries it).
+  const clamped = Math.max(-30, Math.min(180, next))
+  if (clamped !== next) console.log(`[delay] ${next} min is out of range, clamping to ${clamped}`)
+  next = clamped
   writeOffset(now, next)
   console.log(
     `[delay] classes now shifted ${next >= 0 ? '+' : ''}${next} min for today (was ${cur}). ` +
