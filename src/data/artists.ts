@@ -1,3 +1,24 @@
+// Real photos: face-centered crops, optimized. Circle 600x600 for the lists, cover
+// 1080x830 for the top of the artist page. Imported (not in /public) so a missing file
+// fails the build, and a replaced photo gets a new URL instead of staying stuck in the
+// service worker cache.
+import luanAdriana from '../assets/artists/luan-adriana.jpg'
+import luanAdrianaCover from '../assets/artists/luan-adriana-cover.jpg'
+import pedroAna from '../assets/artists/pedro-ana.jpg'
+import pedroAnaCover from '../assets/artists/pedro-ana-cover.jpg'
+import rachelBruna from '../assets/artists/rachel-bruna.jpg'
+import rachelBrunaCover from '../assets/artists/rachel-bruna-cover.jpg'
+import deborahDouglas from '../assets/artists/deborah-douglas.jpg'
+import deborahDouglasCover from '../assets/artists/deborah-douglas-cover.jpg'
+import jorgeAnabella from '../assets/artists/jorge-anabella.jpg'
+import jorgeAnabellaCover from '../assets/artists/jorge-anabella-cover.jpg'
+import leandroNayara from '../assets/artists/leandro-nayara.jpg'
+import leandroNayaraCover from '../assets/artists/leandro-nayara-cover.jpg'
+import djKel from '../assets/artists/dj-kel.jpg'
+import djKelCover from '../assets/artists/dj-kel-cover.jpg'
+import djInstinx from '../assets/artists/dj-instinx.jpg'
+import djInstinxCover from '../assets/artists/dj-instinx-cover.jpg'
+
 export interface Artist {
   id: string
   /** 'instructor' couples vs 'dj'. Both get the Privates button when they sent a contact. */
@@ -5,7 +26,10 @@ export interface Artist {
   name: string
   role: string
   origin: string
+  /** Square photo shown in the round frames (lists and Home). */
   photo: string
+  /** Wide photo at the top of the artist page. Empty = uses `photo`. */
+  cover: string
   color: string
   /** Line breaks are kept on the page (paragraphs and bullet lists). */
   bio: string
@@ -21,7 +45,10 @@ export interface Artist {
 
 /** The fields the artists filled in on the "Artists MBZF" Google Form. */
 type ArtistInfo = Partial<
-  Pick<Artist, 'origin' | 'bio' | 'curiosity' | 'whatsapp' | 'instagram' | 'privatesViaInstagram'>
+  Pick<
+    Artist,
+    'origin' | 'photo' | 'cover' | 'bio' | 'curiosity' | 'whatsapp' | 'instagram' | 'privatesViaInstagram'
+  >
 >
 
 /** Joins paragraphs with a blank line between them. */
@@ -38,8 +65,8 @@ const phDj = (lock: number) => `https://loremflickr.com/600/600/dj,music?lock=${
 const PALETTE = ['#E8638A', '#F5C842', '#4BBFBF', '#3A7D2C', '#E8722A']
 const color = (i: number) => PALETTE[i % PALETTE.length]
 
-// Real teacher couples taken from the official schedule. Bios and contacts come
-// from INFO below; photos are still placeholders until the real ones arrive.
+// Real teacher couples taken from the official schedule. Bios, contacts and photos
+// come from INFO below; anyone without them keeps the placeholders.
 const COUPLES = [
   'Matheus & Nina',
   'Luan & Adriana',
@@ -116,6 +143,8 @@ const INFO: Partial<Record<ArtistName, ArtistInfo>> = {
   },
 
   'Luan & Adriana': {
+    photo: luanAdriana,
+    cover: luanAdrianaCover,
     bio: p(
       'Their goal: “Dance with your partner, not with the movement!”',
       [
@@ -138,6 +167,8 @@ const INFO: Partial<Record<ArtistName, ArtistInfo>> = {
 
   'Pedro & Ana': {
     origin: 'Rio de Janeiro, Brazil',
+    photo: pedroAna,
+    cover: pedroAnaCover,
     bio: p(
       'Brazilian Zouk World Champions from Rio, Pedro and Ana came up through Alex de Carvalho’s school. They are instructors, choreographers, performers, and certified judges with the Brazilian Zouk Dance Council.',
       'The couple is known for their contribution to artistry and creativity in the Zouk and Lambada scene, and as community builders with leadership roles in Toronto, NYC, Boston, and Upstate NY.',
@@ -149,11 +180,15 @@ const INFO: Partial<Record<ArtistName, ArtistInfo>> = {
     instagram: 'pedroandanadance',
   },
 
-  'Rachel & Bruna': { ...RACHEL, origin: '' },
-  'Jorge & Anabella': { ...JORGE, origin: '' },
+  // No photo of Rachel and Bruna together: their photos are side by side.
+  'Rachel & Bruna': { ...RACHEL, origin: '', photo: rachelBruna, cover: rachelBrunaCover },
+  'Deborah & Douglas': { photo: deborahDouglas, cover: deborahDouglasCover },
+  'Jorge & Anabella': { ...JORGE, origin: '', photo: jorgeAnabella, cover: jorgeAnabellaCover },
 
   'Leandro & Nayara': {
     origin: 'São Paulo, Brazil',
+    photo: leandroNayara,
+    cover: leandroNayaraCover,
     bio: p(
       'Leandro and Nayara are dancers, teachers, and choreographers from São Paulo, Brazil. They are the current Brazilian Zouk World Champions and three-time World Championship runners-up. Today, they travel across the United States teaching workshops, mentoring dancers, and training competitors.',
       'With extensive experience in Jack & Jill competitions and competitor development, they are known for their focus on musicality, partner connection, and performance. They also run a dance school in Brazil and continue to work with students from around the world.',
@@ -180,8 +215,9 @@ const INFO: Partial<Record<ArtistName, ArtistInfo>> = {
     instagram: 'fabioaraujodj',
   },
 
-  'DJ Kel': RACHEL,
-  'DJ InstinX': JORGE,
+  'DJ Kel': { ...RACHEL, photo: djKel, cover: djKelCover },
+  // Jorge only has photos with Anabella: circle is his face alone, cover is the two of them.
+  'DJ InstinX': { ...JORGE, photo: djInstinx, cover: djInstinxCover },
 }
 
 const instructors: Artist[] = COUPLES.map((name, i): Artist => ({
@@ -191,6 +227,7 @@ const instructors: Artist[] = COUPLES.map((name, i): Artist => ({
   role: 'Instructors',
   origin: '',
   photo: phArtist(101 + i),
+  cover: '',
   color: color(i),
   bio: BIO_PLACEHOLDER,
   curiosity: CURIOSITY_PLACEHOLDER,
@@ -207,6 +244,7 @@ const djs: Artist[] = DJS.map((name, i): Artist => ({
   role: 'DJ',
   origin: '',
   photo: phDj(201 + i),
+  cover: '',
   color: color(i),
   bio: BIO_PLACEHOLDER,
   curiosity: CURIOSITY_PLACEHOLDER,

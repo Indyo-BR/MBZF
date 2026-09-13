@@ -71,7 +71,7 @@ export default function ArtistDetailPage() {
       {/* Hero photo */}
       <div className="skeleton relative h-80 w-full overflow-hidden">
         <FadeInImage
-          src={artist.photo}
+          src={artist.cover || artist.photo}
           alt={artist.name}
           className="w-full h-full object-cover"
           priority
