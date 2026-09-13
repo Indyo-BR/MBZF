@@ -34,13 +34,17 @@ export default function ArtistDetailPage() {
     )
   }
 
-  // "Privates" contact link. Currently points to WhatsApp, but can be
-  // swapped per artist to any contact channel (email, form, IG, etc.).
+  // "Privates" contact: WhatsApp when the artist sent a number, otherwise an
+  // Instagram DM for artists who asked to be reached there. No contact = no button.
   const privatesMessage = encodeURIComponent(
     `Hi ${artist.name}! I'm interested in private lessons (Privates) at the Miami Beach Zouk Festival.`
   )
-  const privatesLink = `https://wa.me/${artist.whatsapp}?text=${privatesMessage}`
-  const igLink = `https://instagram.com/${artist.instagram}`
+  const privatesLink = artist.whatsapp
+    ? `https://wa.me/${artist.whatsapp}?text=${privatesMessage}`
+    : artist.privatesViaInstagram && artist.instagram
+      ? `https://ig.me/m/${artist.instagram}`
+      : ''
+  const igLink = artist.instagram ? `https://instagram.com/${artist.instagram}` : ''
 
   // Go back to the list the artist belongs to (Artists vs DeeJays tab).
   const backTo = artist.kind === 'dj' ? '/artists?tab=dj' : '/artists'
@@ -95,7 +99,7 @@ export default function ArtistDetailPage() {
         {/* Biography */}
         <section className="reveal mb-6" style={{ animationDelay: '60ms' }}>
           <h2 className="font-bebas text-2xl text-primary tracking-wide mb-2">Biography</h2>
-          <p className="text-base text-on-surface/80 leading-relaxed">{artist.bio}</p>
+          <p className="text-base text-on-surface/80 leading-relaxed whitespace-pre-line">{artist.bio}</p>
         </section>
 
         {/* Curiosity */}
@@ -104,8 +108,8 @@ export default function ArtistDetailPage() {
           <p className="text-sm text-on-surface/75 italic leading-relaxed">{artist.curiosity}</p>
         </section>
 
-        {/* Privates CTA — instructors only (DJs show Instagram only) */}
-        {artist.kind === 'instructor' && (
+        {/* Privates CTA: any artist (instructor or DJ) who sent a contact */}
+        {privatesLink && (
           <div className="reveal" style={{ animationDelay: '220ms' }}>
             <a
               href={privatesLink}
@@ -124,17 +128,19 @@ export default function ArtistDetailPage() {
           </div>
         )}
 
-        {/* Instagram — smaller secondary button */}
-        <a
-          href={igLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="reveal flex items-center justify-center gap-2 w-1/2 mx-auto border-2 border-flamingo-pink text-flamingo-pink py-2.5 rounded-full font-bebas text-base tracking-widest active:scale-95 transition-transform"
-          style={{ animationDelay: '300ms' }}
-        >
-          <InstagramIcon className="w-4 h-4" />
-          Instagram
-        </a>
+        {/* Instagram: smaller secondary button, only when there is a handle */}
+        {igLink && (
+          <a
+            href={igLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="reveal flex items-center justify-center gap-2 w-1/2 mx-auto border-2 border-flamingo-pink text-flamingo-pink py-2.5 rounded-full font-bebas text-base tracking-widest active:scale-95 transition-transform"
+            style={{ animationDelay: '300ms' }}
+          >
+            <InstagramIcon className="w-4 h-4" />
+            Instagram
+          </a>
+        )}
       </div>
     </div>
   )
