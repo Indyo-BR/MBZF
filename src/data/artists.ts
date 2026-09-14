@@ -2,12 +2,16 @@
 // 1080x830 for the top of the artist page. Imported (not in /public) so a missing file
 // fails the build, and a replaced photo gets a new URL instead of staying stuck in the
 // service worker cache.
+import matheusNina from '../assets/artists/matheus-nina.jpg'
+import matheusNinaCover from '../assets/artists/matheus-nina-cover.jpg'
 import luanAdriana from '../assets/artists/luan-adriana.jpg'
 import luanAdrianaCover from '../assets/artists/luan-adriana-cover.jpg'
 import pedroAna from '../assets/artists/pedro-ana.jpg'
 import pedroAnaCover from '../assets/artists/pedro-ana-cover.jpg'
-import rachelBruna from '../assets/artists/rachel-bruna.jpg'
-import rachelBrunaCover from '../assets/artists/rachel-bruna-cover.jpg'
+import brunaRachel from '../assets/artists/bruna-rachel.jpg'
+import brunaRachelCover from '../assets/artists/bruna-rachel-cover.jpg'
+import ryelRomina from '../assets/artists/ryel-romina.jpg'
+import ryelRominaCover from '../assets/artists/ryel-romina-cover.jpg'
 import deborahDouglas from '../assets/artists/deborah-douglas.jpg'
 import deborahDouglasCover from '../assets/artists/deborah-douglas-cover.jpg'
 import jorgeAnabella from '../assets/artists/jorge-anabella.jpg'
@@ -65,20 +69,21 @@ const phDj = (lock: number) => `https://loremflickr.com/600/600/dj,music?lock=${
 const PALETTE = ['#E8638A', '#F5C842', '#4BBFBF', '#3A7D2C', '#E8722A']
 const color = (i: number) => PALETTE[i % PALETTE.length]
 
-// Real teacher couples taken from the official schedule. Bios, contacts and photos
-// come from INFO below; anyone without them keeps the placeholders.
+// Teacher couples in the festival's official order (owner's list, Sep 2026).
+// Spelling follows the artists themselves: Ryel (not Riel), Deborah, Nina.
+// Bios, contacts and photos come from INFO below; anyone without them keeps the placeholders.
 const COUPLES = [
-  'Matheus & Nina',
-  'Luan & Adriana',
-  'Pedro & Ana',
-  'Rachel & Bruna',
-  'Renato & Tamara',
-  'Deborah & Douglas',
-  'Ryel & Romina',
-  'Jorge & Anabella',
   'Paulo & Luiza',
   'Val & Vanessa',
+  'Luan & Adriana',
+  'Matheus & Nina',
   'Leandro & Nayara',
+  'Pedro & Ana',
+  'Ryel & Romina',
+  'Bruna & Rachel',
+  'Renato & Tamara',
+  'Deborah & Douglas',
+  'Jorge & Anabella',
 ] as const
 
 // Festival DJs. Instagram comes later; DJs have no Privates contact.
@@ -135,6 +140,8 @@ const JORGE: ArtistInfo = {
 const INFO: Partial<Record<ArtistName, ArtistInfo>> = {
   'Matheus & Nina': {
     origin: 'Campinas, Brazil',
+    photo: matheusNina,
+    cover: matheusNinaCover,
     bio: 'They’re from Campinas, SP, Brazil. Official partners since 2018, Brazilian Zouk dancers for 15 years, and directors of Barracão da Dança.',
     curiosity:
       'They’ve known each other for 15 years. Matheus even danced with Nina at her 15th birthday party.',
@@ -180,8 +187,9 @@ const INFO: Partial<Record<ArtistName, ArtistInfo>> = {
     instagram: 'pedroandanadance',
   },
 
-  // No photo of Rachel and Bruna together: their photos are side by side.
-  'Rachel & Bruna': { ...RACHEL, origin: '', photo: rachelBruna, cover: rachelBrunaCover },
+  // No photo of the two together: their solo photos are side by side, in name order.
+  'Ryel & Romina': { photo: ryelRomina, cover: ryelRominaCover },
+  'Bruna & Rachel': { ...RACHEL, origin: '', photo: brunaRachel, cover: brunaRachelCover },
   'Deborah & Douglas': { photo: deborahDouglas, cover: deborahDouglasCover },
   'Jorge & Anabella': { ...JORGE, origin: '', photo: jorgeAnabella, cover: jorgeAnabellaCover },
 
@@ -254,3 +262,10 @@ const djs: Artist[] = DJS.map((name, i): Artist => ({
   ...INFO[name],
 }))
 export const artists: Artist[] = [...instructors, ...djs]
+
+/** Home "Featured artists": the first couples (official order) that already have a real
+ *  photo, so the Home never shows a placeholder while real photos exist. */
+export const featuredArtists: Artist[] = [
+  ...instructors.filter((a) => a.cover),
+  ...instructors.filter((a) => !a.cover),
+].slice(0, 3)

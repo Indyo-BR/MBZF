@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { artists } from '../data/artists'
+import { featuredArtists } from '../data/artists'
 import FadeInImage from '../components/FadeInImage'
 import AlertsButton from '../components/AlertsButton'
 
@@ -148,7 +148,7 @@ export default function HomePage() {
       <section className="reveal mt-4 px-6 pb-6" style={{ animationDelay: '300ms' }}>
         <h2 className="font-bebas text-primary text-2xl tracking-wide mb-4">FEATURED ARTISTS</h2>
         <div className="grid grid-cols-4 gap-3">
-          {artists.slice(0, 3).map((a) => (
+          {featuredArtists.map((a) => (
             <button
               key={a.id}
               onClick={() => navigate(`/artists/${a.id}`)}

@@ -58,7 +58,7 @@ export const schedule: ScheduleSlot[] = [
     ampm: 'PM',
     type: 'workshop',
     room1: { artist: 'Pedro & Ana', title: TBD },
-    room2: { artist: 'Rachel & Bruna', title: 'Lambada' },
+    room2: { artist: 'Bruna & Rachel', title: 'Lambada' },
   },
   {
     id: 'd1-2',
@@ -130,7 +130,7 @@ export const schedule: ScheduleSlot[] = [
     time: '3:45',
     ampm: 'PM',
     type: 'workshop',
-    room1: { artist: 'Rachel & Bruna', title: 'Lambada move for Zoukers' },
+    room1: { artist: 'Bruna & Rachel', title: 'Lambada move for Zoukers' },
     room2: { artist: 'Pedro & Ana', title: TBD },
   },
   {
